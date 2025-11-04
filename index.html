@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>ReactJS Learning</title>
+    <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+
+<!--todo recreate this web https://spring.io/-->
+<body>
+    <header>
+        <a href="#">
+            Spring by VMware Tanzu
+        </a>
+        <br/>
+        <br/>
+        <nav>
+            <a href="#">Why Spring</a>
+            <a href="#">Learn</a>
+            <a href="#">Projects</a>
+            <a href="#">Academy</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Spring makes Java modern</h1>
+            <button>Why Spring</button>
+            <button>Quickstart</button>
+        </section>
+
+        <section>
+            <h1>What Spring can do</h1>
+            <ul>
+                <li>
+                    <div>
+                        <h2>Generative AI</h2>
+                        <p>
+                            Integrate AI into your Spring applications without reinventing the wheel.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h2>Microservices</h2>
+                        <p>
+                            Quickly deliver production‑grade features with independently evolvable microservices.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h2>Reactive</h2>
+                        <p>
+                            Spring's asynchronous, nonblocking architecture means you can get more from your computing resources.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>Level up your Java code</h1>
+            <p>
+                With Spring Boot in your app, just a few lines of code is all you need to start building services like a boss.
+            </p>
+            <p>
+                New to Spring? Try our simple quickstart guide.
+            </p>
+            <pre>
+                @SpringBootApplication
+                @RestController
+                public class DemoApplication {
+
+                    @GetMapping("/helloworld")
+                    public String hello() {
+                        return"Hello World!";
+                    }
+                }
+            </pre>
+        </section>
+
+        <section>
+            <h1>
+                Quote from developers
+            </h1>
+            <blockquote>
+                Most [of our] services today are all based on Spring Boot.
+                I think the most important thing is that [Spring] has just
+                been very well maintained over the years...that is important for us for the long term because
+                we don’t want to be switching to a new framework every two years.
+            </blockquote>
+            <div>
+                <img src="static/img/dev-photo-1.png" alt="Developer photo"/>
+                <p>
+                    Mr. FooBar, Senior Software Engineer, FooBar Inc.
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <div>
+                <h3>Get Ahead</h3>
+                <p>
+                    VMware offers training and certification to turbo-charge your progress.
+                </p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <h3>Get Support</h3>
+                <p>
+                    Tanzu Spring offers support and binaries for OpenJDK™, Spring, and Apache Tomcat® in one simple subscription.
+                </p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <h3>Upcoming Events</h3>
+                <p>
+                    Check out all the upcoming events in the Spring community.
+                </p>
+                <a href="#">Learn more</a>
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+
+</html>

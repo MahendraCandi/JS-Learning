@@ -1,0 +1,39 @@
+/*
+h1 -> called selector
+{} -> called declaration block
+color: green; -> called declaration
+
+this is called css rule
+h1 {
+    font-size: 2rem;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+*/
+
+h1 {
+    font-size: 2rem;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+h2 {
+    font-size: 21px;
+    font-family: sans-serif;
+}
+
+h3 {
+    font-size: 18px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+p {
+    font-size: 14px;
+    font-family: sans-serif;
+    line-height: 1.5;
+}
