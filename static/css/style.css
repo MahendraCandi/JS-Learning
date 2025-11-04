@@ -13,27 +13,38 @@ h1 {
 
 */
 
+/*combining element which has same declarations*/
+h1, h2, h3, p {
+    font-family: Helvetica, sans-serif;
+}
+
 h1 {
     font-size: 2rem;
-    font-family: sans-serif;
     text-transform: uppercase;
     font-style: italic;
 }
 
 h2 {
     font-size: 21px;
-    font-family: sans-serif;
 }
 
 h3 {
     font-size: 18px;
-    font-family: sans-serif;
     text-transform: uppercase;
     text-align: center;
 }
 
 p {
     font-size: 14px;
-    font-family: sans-serif;
     line-height: 1.5;
+}
+
+/*
+descendant selector.
+practically, it is better to avoid descendant selector with more than 3 level.
+due to changes the element structure.
+*/
+footer p {
+    font-size: 12px;
+    text-align: center;
 }
