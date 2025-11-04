@@ -48,3 +48,23 @@ footer p {
     font-size: 12px;
     text-align: center;
 }
+
+/*
+use id selector for unique element.
+practically, it is better to avoid id selector.
+because it is not reusable.
+use class selector for multiple element instead.
+*/
+#dev-quote {
+    font-size: 18px;
+    font-style: italic;
+}
+
+/*use class selector for multiple element*/
+.feature-list {
+    list-style: none;
+}
+
+.feature-title {
+    font-family: Consolas, monospace;
+}
