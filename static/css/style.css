@@ -67,4 +67,34 @@ use class selector for multiple element instead.
 
 .feature-title {
     font-family: Consolas, monospace;
+    color: #69ad3d;
+}
+
+/*
+Defining color.
+1. Regular RGB / RGBA (plus "alpha" for transparency)
+   Example: rgb(0, 0, 255) or rgba(255, 0, 0, 0.7)
+2. Hexadecimal
+   Using 0 to ff instead of using 0 to 255.
+   ff is equal to 255.
+   Example: #0000ff is equal to rgb(0, 0, 255)
+   Shorthand: #00f is equal to rgb(0, 0, 255)
+
+> Practically, designer use hexadecimal and RGBA for a transparency color.
+
+Grey Color:
+Whenever all three color has same value.
+*/
+.big-title {
+    color: #54cf4f
+}
+
+.hero-banner {
+    background-color: #077d38;
+    border-top: 5px solid #4d4b4a;
+    border-bottom: 5px solid #4d4b4a;
+}
+
+body {
+    background-color: aliceblue;
 }
