@@ -98,3 +98,30 @@ Whenever all three color has same value.
 body {
     background-color: aliceblue;
 }
+
+/*
+Pseudo-classes:
+A keyword added to a selector that lets you style a specific state of the selected element(s).
+For example, the pseudo-class `:hover` can be used to select a button when a user's pointer hovers over the button and this selected button can then be styled.
+
+selector:pseudo-class {
+  property: value;
+}
+*/
+li:first-child:hover {
+    font-weight: bold;
+    color: red;
+}
+
+/*
+Pseudo-classes is possible to accept a parameter.
+Also, it can accept number, odd, or even.
+
+NOTE: pseudo-classes won't work if the actual element is not represent the position mentioned by pseudo-classes.
+Example: `main p:first-child`
+Above selector won't work because inside main element,
+the first child is not p element.
+*/
+li:nth-child(even) {
+    background-color: aqua;
+}
