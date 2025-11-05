@@ -125,3 +125,27 @@ the first child is not p element.
 li:nth-child(even) {
     background-color: aqua;
 }
+
+/*
+Styling link.
+Better use pseudo-class instead of element directly.
+Also please notice the order of pseudo-class.
+LVHA -> link visited, hover, active.
+*/
+a:link {
+    color: fuchsia;
+    text-decoration: none;
+}
+
+a:visited {
+    color: blueviolet;
+}
+
+a:hover {
+    color: black;
+}
+
+a:active {
+    color: green;
+    font-style: italic;
+}
