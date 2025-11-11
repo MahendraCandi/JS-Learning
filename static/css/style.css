@@ -149,3 +149,27 @@ a:active {
     color: green;
     font-style: italic;
 }
+
+/*
+Selector priority
+0. important keyword
+1. ID selector
+2. Class selector or Pseudo-class selector
+3. Element selector
+4. Universal selector (using wildcard symbol *)
+*/
+
+/*
+CSS Box Model
+Content -> image, text, etc
+Border -> The line around the edge of element
+Padding -> the space between content and border
+Margin -> the space between element and other element
+Fill area -> area that gets filled with background color
+
+Width -> the width of content
+Final width of element -> left border + left padding + width + right padding + right border
+
+Height -> the height of content
+Final height of element -> top border + top padding + height + bottom padding + bottom border
+*/
