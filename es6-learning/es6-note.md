@@ -312,3 +312,112 @@ console.log(car6point3part2.distanceConvert(1000));
 console.log(car6point3part2['another distance convert'](100));
 
 ```
+
+## 7. Array destructing
+
+1. Array destructing
+* Before ES6, array should be called one by one to extract into a variable.
+
+```javascript
+let scoreSevenPointOne = [100, 200, 500];
+
+let firstScore = scoreSevenPointOne[0],
+secondScore = scoreSevenPointOne[1],
+threeScore = scoreSevenPointOne[2];
+
+console.log({firstScore, secondScore, threeScore});
+
+```
+
+* In ES6, it simplify by using destructing syntax:
+
+let scoreSevenPointOneTwo = [100, 200, 500];
+let [firstScore, secondScore, threeScore] = scoreSevenPointOneTwo;
+console.log({firstScore, secondScore, threeScore});
+
+> Note that the square brackets [] look like the array syntax but they are not.
+
+2. Array Destructuring Assignment and Rest syntax
+
+* use rest three dots `...` to collect all the remaining parameters into a new array object
+
+```javascript
+let scoreSevenPointOne = [100, 200, 500, 600, 1000];
+
+let [x, y, ...scores] = scoreSevenPointOne;
+console.log({x, y, scores}); // {x: 100, y: 200, scores: Array(3)}
+```
+
+3. Default value
+
+* It is possible to set default value for new object inside the bracket signs
+
+```javascript
+let scoreSevenPointThree = [, , 600];
+let [sevenThreeA= 1, sevenThreeB = 2, sevenThreeC = 0] = scoreSevenPointThree;
+console.log({sevenThreeA, sevenThreeB, sevenThreeC}); // {"sevenThreeA": 1, "sevenThreeB": 2, "sevenThreeC": 600}
+```
+
+4. Fallback value
+
+* It is possibe to set a fallback value for array source if arrays is return null
+
+```javascript
+// notice the double pipe sign
+let scoreSevenPointFour = null;
+let [firstFour = 1, secondFour = 2, threeFour = 3] = scoreSevenPointFour || [];
+console.log({firstFour, secondFour, threeFour}); // {"firstFour": 1,"secondFour": 2,"threeFour": 3}
+```
+
+5. Nested destructuring
+
+```javascript
+function getProfile() {
+    return [
+        'John',
+        'Doe',
+        ['Red', 'Green', 'Blue']
+    ];
+}
+
+let [
+    firstName,
+    lastName,
+    [
+        color1,
+        color2,
+        color3
+    ]
+] = getProfile();
+
+console.log(color1, color2, color3); // Red Green Blue
+```
+
+6. Swapping variables
+
+* Easy swapping variables inside array
+
+```javascript
+let a = 10, 
+    b = 20;
+
+[a, b] = [b, a];
+
+console.log(a); // 20
+console.log(b); // 10
+```
+
+7. Function that return multiple types value
+
+```javascript
+const scoreSevenPointSeven = () => {
+    return [
+        100 + 10,
+        "ABCD",
+        { 'name': 'John' }
+    ]
+};
+
+let [s77A, s77B, s77C] = scoreSevenPointSeven();
+console.log({s77A, s77B, s77C}); // {"s77A": 110, "s77B": "ABCD", "s77C": {"name": "John"}}
+```

@@ -240,3 +240,44 @@ console.log(car6point3part2);
 console.log(car6point3part2.distanceConvert(1000));
 console.log(car6point3part2['another distance convert'](100));
 
+// 7.1
+// before ES6
+let scoreSevenPointOne = [100, 200, 500];
+
+let firstScore = scoreSevenPointOne[0],
+    secondScore = scoreSevenPointOne[1],
+    threeScore = scoreSevenPointOne[2];
+
+console.log({firstScore, secondScore, threeScore});
+
+// after ES6
+let scoreSevenPointOneTwo = [100, 200, 500];
+let [firstScore_, secondScore_, threeScore_] = scoreSevenPointOneTwo;
+console.log({firstScore_, secondScore_, threeScore_});
+
+// 7.2
+let scoreSevenPointTwo = [100, 200, 500, 600, 1000];
+let [sevenTwoA, sevenTwoB, ...sevenTwoC] = scoreSevenPointTwo;
+console.log({sevenTwoA, sevenTwoB, sevenTwoC});
+
+// 7.3
+let scoreSevenPointThree = [, , 600];
+let [sevenThreeA= 1, sevenThreeB = 2, sevenThreeC = 0] = scoreSevenPointThree;
+console.log({sevenThreeA, sevenThreeB, sevenThreeC});
+
+// 7.4
+let scoreSevenPointFour = null;
+let [firstFour = 1, secondFour = 2, threeFour = 3] = scoreSevenPointFour || [];
+console.log({firstFour, secondFour, threeFour}); // {"firstFour": 1,"secondFour": 2,"threeFour": 3}
+
+// 7.7
+const scoreSevenPointSeven = () => {
+    return [
+        100 + 10,
+        "ABCD",
+        { 'name': 'John' }
+    ]
+};
+
+let [s77A, s77B, s77C] = scoreSevenPointSeven();
+console.log({s77A, s77B, s77C});
