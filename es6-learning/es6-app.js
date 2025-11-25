@@ -191,3 +191,52 @@ const obj2 = {
 };
 console.log("spread use to copy object `const obj2 = {...obj1}`: ", obj2);
 
+// 6.2
+// before es 6
+let myLaptop = "My Laptop"
+let laptop = {
+    [myLaptop]: 'HP PRO',
+    'price': 100000
+}
+console.log(laptop);
+console.log(laptop[myLaptop]);
+
+// after es 6
+const fieldPrefix = 'data#';
+let myUniform = "The uniform"
+let uniform = {
+    [fieldPrefix + myUniform]: 'White Clothes',
+    [fieldPrefix + 'color']: 'blue white'
+}
+console.log(uniform);
+console.log(uniform[fieldPrefix + myUniform]);
+
+// 6.3
+// before es6
+let car6point3 = {
+    'name': 'ESEMKA',
+    'distance': 56000,
+    'distanceConvert': function(unit) {
+        return this.distance / unit;
+    }
+}
+
+console.log(car6point3);
+console.log(car6point3.distanceConvert(1000));
+
+// after es6, notice the function
+let car6point3part2 = {
+    'name': 'ESEMKA',
+    'distance': 56000,
+    'distanceConvert'(unit) {
+        return this.distance / unit;
+    },
+    'another distance convert'(unit) {
+        return this.distance / unit;
+    }
+}
+
+console.log(car6point3part2);
+console.log(car6point3part2.distanceConvert(1000));
+console.log(car6point3part2['another distance convert'](100));
+

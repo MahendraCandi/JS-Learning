@@ -218,3 +218,97 @@
     };
     console.log("spread use to copy object `const obj2 = {...obj1}`: ", obj2);
     ```
+   
+## 6. Object Literal
+
+> a pattern to create Javascript object
+
+1. Object property initializer shorthand
+* Before ES6 object literal was a collection of name-value pairs.
+
+```javascript
+function createMachine(name, status) {
+    return {
+        name: name,
+        status: status
+    };
+}
+```
+
+* In ES6, simplify the syntax into:
+
+```javascript
+// notice the remove colon (:)
+function createMachine(name, status) {
+    return {
+        name,
+        status
+    };
+}
+
+// or
+let name = 'chain saw';
+let status = 'working';
+let chainSaw = { name, status }
+```
+
+2. Computed property name
+* Before ES6, use bracket notation as property name. Means, very useful for dynamic property name with space also.
+
+```javascript
+let myLaptop = "My Laptop"
+let laptop = {
+    [myLaptop]: 'HP PRO',
+    'price': 100000
+}
+console.log(laptop[myLaptop]);
+```
+
+* In ES6, it can use **expression** as property name.
+
+```javascript
+const fieldPrefix = 'data#';
+let myUniform = "The uniform"
+let uniform = {
+    [fieldPrefix + myUniform]: 'White Clothes',
+    [fieldPrefix + 'color']: 'blue white'
+}
+console.log(uniform);
+console.log(uniform[fieldPrefix + myUniform]);
+```
+
+3. Concise method syntax
+* Before ES6, defining method inside object literal was very should specify name and full function.
+
+```javascript
+let car6point3 = {
+    'name': 'ESEMKA',
+    'distance': 56000,
+    'distanceConvert': function(unit) {
+        return this.distance / unit;
+    }
+}
+
+console.log(car6point3);
+console.log(car6point3.distanceConvert(1000));
+```
+
+* In ES6, it simplify the function specified inside object literal:
+
+```javascript
+let car6point3part2 = {
+    'name': 'ESEMKA',
+    'distance': 56000,
+    'distanceConvert'(unit) {
+        return this.distance / unit;
+    },
+    'another distance convert'(unit) {
+        return this.distance / unit;
+    }
+}
+
+console.log(car6point3part2);
+console.log(car6point3part2.distanceConvert(1000));
+console.log(car6point3part2['another distance convert'](100));
+
+```
