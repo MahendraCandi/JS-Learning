@@ -508,3 +508,49 @@ console.log(theCompanyName);
 console.log(theAddress);
 console.log(company);
 ```
+
+## 9. Modules
+
+To best practice, for working with multiple files, use modules.
+We don't have to defined all the JS script in the html again.
+Just import the other script into the current script.
+
+```javascript
+// another JS file
+
+let GLOBAL_LET = 'I am let object';
+
+const SOMETHING_IMPORTANT = 'I am important';
+const aFunction = () => console.log('I am a function');
+const anotherObject = {
+    firstName: 'another',
+    lastName: 'object'
+};
+
+export {GLOBAL_LET, SOMETHING_IMPORTANT, aFunction, anotherObject};
+```
+
+```javascript
+// current JS file
+
+import {SOMETHING_IMPORTANT, aFunction, anotherObject} from './es6-app-another.js';
+
+console.log(SOMETHING_IMPORTANT);
+aFunction();
+console.log(anotherObject);
+```
+
+```html
+<!--The HTML-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ES6 Learning</title>
+    </head>
+    <body>
+        <script src="es6-app.js" type="module"></script>
+    </body>
+</html>
+```

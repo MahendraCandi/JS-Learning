@@ -2,7 +2,7 @@
 
 // define var in another js file
 // and call inside this file via window object
-console.log('call var through window object: ' + window.GLOBAL_VAR);
+console.log('call var through window object: ' + window.GLOBAL_VAR); // since we don't declare the another JS script in html, this global variable will produce undefined
 console.log('call let through window object, the result should be undefined: ' + window.GLOBAL_LET);
 
 // let cannot be declared twice in the same scope
@@ -52,7 +52,7 @@ person.age = 31;
 console.log("const person age after re-initialize: ", person.age);
 // to make properties immutable, use Object.freeze()
 Object.freeze(person);
-person.age = 32; // will be ignored
+// person.age = 32; // will be ignored. UPDATE: Using module will get error on this syntax
 console.log("const person age after object freeze: ", person.age);
 // however, the object freeze will only freeze properties inside object
 // NOT the nested object as properties
@@ -314,3 +314,9 @@ let {company: { companyName: theCompanyName, address: theAddress }, company} = e
 console.log(theCompanyName);
 console.log(theAddress);
 console.log(company);
+
+import {SOMETHING_IMPORTANT, printMe, anotherObject} from './es6-app-another.js';
+
+console.log(SOMETHING_IMPORTANT);
+printMe();
+console.log(anotherObject);
