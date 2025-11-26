@@ -281,3 +281,36 @@ const scoreSevenPointSeven = () => {
 
 let [s77A, s77B, s77C] = scoreSevenPointSeven();
 console.log({s77A, s77B, s77C});
+
+// 8.1
+const eight1 = {
+    firstName: 'John',
+    lastName: 'Doe',
+    company: {
+        companyName: 'ABC Company',
+        address: '123 Main St'
+    }
+}
+
+let {firstName: fName, lastName: lName} = eight1;
+console.log(fName);
+console.log(lName);
+
+let {firstName, lastName} = eight1;
+console.log(firstName);
+console.log(lastName);
+
+let {firstName: firstName2, lastName: lastName2, currentAge: age = 18} = eight1;
+console.log(firstName2);
+console.log(lastName2);
+console.log(age);
+
+const eight3 = () => null;
+let {name83, age83} = eight3;
+console.log(name83);
+console.log(age83);
+
+let {company: { companyName: theCompanyName, address: theAddress }, company} = eight1;
+console.log(theCompanyName);
+console.log(theAddress);
+console.log(company);

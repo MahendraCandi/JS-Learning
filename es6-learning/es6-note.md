@@ -421,3 +421,90 @@ const scoreSevenPointSeven = () => {
 let [s77A, s77B, s77C] = scoreSevenPointSeven();
 console.log({s77A, s77B, s77C}); // {"s77A": 110, "s77B": "ABCD", "s77C": {"name": "John"}}
 ```
+
+## 8. Object Destructuring
+
+* Before ES6, to assigning a properties into a variable, the properties should be called one by one.
+
+```javascript
+let person = {
+    name: 'John',
+    age: 30
+}
+
+let name = person.name;
+let age = person.age;
+```
+
+1. Destructing object
+
+Notice the variable `fName` and `lName`, they are representing the new variable name.
+The variable `firstName` and `lastName` are the properties inside the object.
+
+```javascript
+const eight1 = {
+    firstName: 'John',
+    lastName: 'Doe',
+}
+
+let {firstName: fName, lastName: lName} = eight1;
+console.log(fName);
+console.log(lName);
+```
+
+Additionally, the object literal above can be simplified using by removing the name-value pattern.
+But, only if properties between source and target are the same.
+
+```javascript
+const eight1 = {
+    firstName: 'John',
+    lastName: 'Doe',
+}
+
+let {firstName, lastName} = eight1;
+console.log(firstName);
+console.log(lastName);
+```
+
+2. Default value
+
+```javascript
+const eight1 = {
+    firstName: 'John',
+    lastName: 'Doe',
+}
+
+let {firstName: firstName2, lastName: lastName2, currentAge: age = 18} = eight1;
+console.log(firstName2);
+console.log(lastName2);
+console.log(age);
+```
+3. Destructing a null object
+
+Notice the double pipe sign `||` to set a fallback value if the object is null.
+Useful to avoid error `Uncaught TypeError: Cannot destructure property 'name83' of 'eight3(...)' as it is null.`.
+
+```javascript
+const eight3 = null;
+let {name83, age83} = eight3 || {};
+console.log(name83);
+console.log(age83);
+```
+
+4. Nested destructuring
+
+```javascript
+const eight1 = {
+    firstName: 'John',
+    lastName: 'Doe',
+    company: {
+        companyName: 'ABC Company',
+        address: '123 Main St'
+    }
+}
+
+let {company: { companyName: theCompanyName, address: theAddress }, company} = eight1;
+console.log(theCompanyName);
+console.log(theAddress);
+console.log(company);
+```
