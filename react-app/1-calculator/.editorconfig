@@ -1,0 +1,12 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+# Use spaces for indentation
+indent_style = space
+# Set indentation size to 2 spaces
+indent_size = 2
+# Ensure files end with a newline
+insert_final_newline = true
+# Trim trailing whitespace from lines
+trim_trailing_whitespace = true
