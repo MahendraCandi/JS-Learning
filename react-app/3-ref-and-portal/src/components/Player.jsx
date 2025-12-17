@@ -1,10 +1,21 @@
+import {useState} from "react";
+
 export default function Player() {
+
+  const [nameInput, setNameInput] = useState('');
+  const [titleName, setTitleName] = useState('');
+
   return (
     <section id="player">
-      <h2>Welcome unknown entity</h2>
+      <h2>Welcome {titleName === '' ? 'unknown entity' : titleName}</h2>
       <p>
-        <input type="text" />
-        <button>Set Name</button>
+        <input type="text"
+               value={nameInput}
+               onChange={(e) => setNameInput(e.target.value)} />
+        <button
+          onClick={() => setTitleName(nameInput)}
+        >
+          Set Name</button>
       </p>
     </section>
   );
