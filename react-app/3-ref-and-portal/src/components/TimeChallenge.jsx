@@ -3,30 +3,28 @@ import ResultModal from "./ResultModal.jsx";
 
 export function TimeChallenge({title, targetTime}) {
   const [isRunning, setIsRunning] = useState(false);
-  const [isOpenResult, setIsOpenResult] = useState(false)
   const timeoutId = useRef(0);
+  const dialogModalRef = useRef();
 
   function startTimer() {
     setIsRunning(true);
     let currentTimeoutId = setTimeout(() => stopTimer(), targetTime * 1000);
     timeoutId.current = currentTimeoutId;
-    setIsOpenResult(false);
     console.log('start ' + currentTimeoutId)
   }
 
   function stopTimer() {
     setIsRunning(false);
     clearTimeout(timeoutId.current);
-    setIsOpenResult(true);
+    dialogModalRef.current.showModal();
     console.log('stop ' + timeoutId.current);
   }
 
   return (
     <>
-      <ResultModal result={"something"}
-                   targetTime={targetTime}
-                   isOpen={isOpenResult}
-                   handleClose={() => setIsOpenResult(false)}/>
+      <ResultModal ref={dialogModalRef}
+                   result={"something"}
+                   targetTime={targetTime}/>
       <section className={"challenge"}>
         <h2>{title}</h2>
         <p className={"challenge-time"}>
