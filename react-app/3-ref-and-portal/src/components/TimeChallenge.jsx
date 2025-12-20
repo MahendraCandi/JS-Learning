@@ -16,7 +16,7 @@ export function TimeChallenge({title, targetTime}) {
   function stopTimer() {
     setIsRunning(false);
     clearTimeout(timeoutId.current);
-    dialogModalRef.current.showModal();
+    dialogModalRef.current.open(); // open() is a function return by useImperativeHandle()
     console.log('stop ' + timeoutId.current);
   }
 

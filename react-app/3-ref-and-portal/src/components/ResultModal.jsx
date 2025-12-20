@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, useImperativeHandle, useRef} from "react";
 
 // React 19 and above can use ref property directly
 // export default function ResultModal({ ref, result, targetTime }) {
@@ -20,8 +20,26 @@ import {forwardRef} from "react";
 
 // react 18 and below should use forwardRef to use ref
 const ResultModal = forwardRef(( { result, targetTime }, ref) => {
+
+  // useImperativeHandle(ref, () => ({}))
+  // when we want to bind an element but only expose specific properties or functions to the parent component
+  // or we want to have single responsibility for the element.
+  //
+  // `inputRef` is representing the input element
+  // second parameter is a function return a custom object. this custom object has functions that will exposed to parent component
+  // by using the custom object, we can have full control over the element that will be bound to the parent component
+  // example we want to change the dialog element to div. the parent element then don't need to adjust the ref.current to div.
+  const inputRef = useRef(null);
+  useImperativeHandle(ref, () => {
+    return {
+      open() {
+        inputRef.current.showModal();
+      }
+    }
+  });
+
   return (
-    <dialog ref={ref} className={"result-modal"}>
+    <dialog ref={inputRef} className={"result-modal"}>
       <h2>You {result}</h2>
       <p>
         The target time was <strong>{targetTime} seconds</strong>.
