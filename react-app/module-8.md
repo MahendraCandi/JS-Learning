@@ -78,3 +78,124 @@ export default function Player() {
   );
 }
 ```
+
+## using forwardRef for old React version (18 and below)
+
+When passing a ref to a component, in React 19 and above, we can just passed it like other props.
+However, in React 18 and below, we need to wrap the component using forwardRef to pass the ref into our component.
+
+New React version (19 and above). Just define the ref as a prop.
+
+`dialog` is an HTML element that can be used as a modal dialog.
+Has a built-in function showModal() to show the dialog.
+In this example, the showModal() will be called in the parent component using ref.
+
+```javascript
+export default function ResultModal({ ref, result, targetTime }) {
+  return (
+    <dialog ref={ref}>
+    ...
+    </dialog>
+  );
+}
+```
+
+Old React version (18 and below).
+
+Notice that the example passing the ref by using forwardRef.
+The forwardRef function accept two parameters: the properties and the ref.
+
+```javascript
+
+const ResultModal = forwardRef(( { result, targetTime }, ref) => {
+  return (
+    <dialog ref={ref}>
+    ...
+    </dialog>
+  );
+});
+
+export default ResultModal;
+```
+
+Example of using the ref in parent component.
+
+```javascript
+
+export default function App() {
+  const dialogModalRef = useRef(null);
+
+  function stopTimer() {
+    dialogModalRef.current.showModal();
+  }
+
+  return (
+    <>
+    ...
+    <ResultModal ref={dialogModalRef} />
+    <button onClick={stopTimer}>Stop Timer</button>
+    ...
+    </>
+  );
+
+}
+```
+
+## Using useImperativeHandle
+
+When we want to bind an element but only expose specific properties or functions to the parent component
+or we want to have single responsibility for the element.
+
+`inputRef` is representing the input element
+second parameter is a function return a custom object.
+
+This custom object has functions that will exposed to parent component
+by using the custom object, we can have full control over the element that will be bound to the parent component
+example we want to change the dialog element to div. the parent element then don't need to adjust the ref.current to div.
+
+```javascript
+export default function ResultModal({ ref, result, targetTime }) {
+  const inputRef = useRef(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      // custom function that will exposed to parent component
+      open() {
+        // if dialog element is changed to div, then open() function should be adjusted to manipulate div.
+        // but the parent component doesn't need to be adjusted. they only know open() function.
+        inputRef.current.showModal();
+      }
+    }
+  });
+
+  return (
+    <dialog ref={inputRef}>
+    ...
+    </dialog>
+  );
+}
+```
+
+This is example of how parent will use the child component.\
+As a result, if the child component change to div, the parent component will not need to change.
+
+```javascript
+
+export default function App() {
+  const dialogModalRef = useRef(null);
+
+  function stopTimer() {
+    dialogModalRef.current.open(); // call custom function open()
+  }
+
+  return (
+    <>
+    ...
+    <ResultModal ref={dialogModalRef} />
+    <button onClick={stopTimer}>Stop Timer</button>
+    ...
+    </>
+  );
+
+}
+```
