@@ -199,3 +199,81 @@ export default function App() {
 
 }
 ```
+
+## Using portal
+
+Used to render a component into DOM outside of the parent component.
+Useful when we want to avoid nested rendering for that component.
+Example good for rendering a modal dialog from nested child components into index.html.
+
+The example below is rendering a html dialog element into modal div inside index.html.
+
+```javascript
+import {createPortal} from "react-dom";
+
+export default function ResultModal() {
+  return createPortal(
+    <dialog ref={inputRef}>
+    ...
+    </dialog>,
+    document.getElementById('modal') // this ID is defined in index.html
+  );
+}
+```
+
+The parent component which called the ResultModal component.
+
+```javascript
+export default function TimeChallenge() {
+  return (
+    <>
+    ...
+    <ResultModal />
+    ...
+    </>
+  );
+}
+```
+
+```javascript
+function App() {
+  return (
+    <>
+      <Player />
+      <div id="challenges">
+        <TimeChallenge />
+        <TimeChallenge />
+        <TimeChallenge />
+        <TimeChallenge />
+      </div>
+    </>
+  );
+}
+export default App;
+```
+
+```javascript
+// script main.jsx
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+As a result, ResultModal will appear under modal div not inside each TimeChallenge component.
+
+```html
+// index.html
+<html lang="en">
+  <head>
+    <title>Refs & Portals</title>
+  </head>
+  <body>
+    <div id="modal"></div>
+    <div id="root"></div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```

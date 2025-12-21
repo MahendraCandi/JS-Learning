@@ -1,4 +1,5 @@
 import {forwardRef, useImperativeHandle, useRef, useState} from "react";
+import {createPortal} from "react-dom";
 
 // React 19 and above can use ref property directly
 // export default function ResultModal({ ref, result, targetTime }) {
@@ -41,7 +42,7 @@ const ResultModal = forwardRef(( { targetTime, timeRemaining, resetTimer }, ref)
     }
   });
 
-  return (
+  return createPortal(
     <dialog ref={inputRef} className={"result-modal"}>
       <h2>You {isLost ? 'Loss' : 'Win'}</h2>
       {!isLost && <h2>Score: {score}</h2>}
@@ -54,7 +55,8 @@ const ResultModal = forwardRef(( { targetTime, timeRemaining, resetTimer }, ref)
       <form method={"dialog"}>
         <button onClick={resetTimer}>Close</button>
       </form>
-    </dialog>
+    </dialog>,
+    document.getElementById('modal')
   );
 });
 
