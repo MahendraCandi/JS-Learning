@@ -1,4 +1,4 @@
-import {forwardRef, useImperativeHandle, useRef} from "react";
+import {forwardRef, useImperativeHandle, useRef, useState} from "react";
 
 // React 19 and above can use ref property directly
 // export default function ResultModal({ ref, result, targetTime }) {
@@ -21,6 +21,9 @@ import {forwardRef, useImperativeHandle, useRef} from "react";
 // react 18 and below should use forwardRef to use ref
 const ResultModal = forwardRef(( { targetTime, timeRemaining, resetTimer }, ref) => {
 
+  const isLost = timeRemaining <= 0;
+  const score = Math.round((timeRemaining / (targetTime * 1000)) * 100);
+
   // useImperativeHandle(ref, () => ({}))
   // when we want to bind an element but only expose specific properties or functions to the parent component
   // or we want to have single responsibility for the element.
@@ -40,7 +43,8 @@ const ResultModal = forwardRef(( { targetTime, timeRemaining, resetTimer }, ref)
 
   return (
     <dialog ref={inputRef} className={"result-modal"}>
-      <h2>You {timeRemaining <= 0 ? 'Loss' : 'Win'}</h2>
+      <h2>You {isLost ? 'Loss' : 'Win'}</h2>
+      {!isLost && <h2>Score: {score}</h2>}
       <p>
         The target time was <strong>{targetTime} seconds</strong>.
       </p>
