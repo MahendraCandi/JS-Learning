@@ -61,6 +61,13 @@ function App() {
     setProjects([...projects]);
   }
 
+  const handleDeleteProject = (project) => {
+    projects.splice(projects.indexOf(project), 1);
+    setProjects([...projects]);
+    setSelectedProject(null);
+    setMainScreen(screen.NO_PROJECT_SELECTED);
+  }
+
   return (
     <main className="h-screen my-8 flex gap-8">
       <SideBar projects={projects} handleOpenProject={handleOpenProject}
@@ -77,7 +84,10 @@ function App() {
       {
         mainScreen === screen.OPEN_PROJECT && selectedProject !== null &&
         // <AddProjectForm handleSaveProject={handleSaveProject} project={selectedProject}  />
-        <ProjectDetail project={selectedProject} handleAddTask={handleAddTask} handleClearTask={handleClearTask} />
+        <ProjectDetail project={selectedProject}
+                       handleAddTask={handleAddTask}
+                       handleClearTask={handleClearTask}
+                       handleDeleteProject={handleDeleteProject} />
       }
     </main>
   );

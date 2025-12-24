@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export default function ProjectDetail({project, handleAddTask, handleClearTask}) {
+export default function ProjectDetail({project, handleAddTask, handleClearTask, handleDeleteProject}) {
   const [task, setTask] = useState('');
 
   const d = new Date(project.date);
@@ -23,16 +23,17 @@ export default function ProjectDetail({project, handleAddTask, handleClearTask})
           <h2 className={"text-3xl font-bold text-stone-700 mt-4"}>
             {project.title}
           </h2>
-          <button className={"text-stone-700 hover:text-red-500"}>
+          <button className={"text-stone-700 hover:text-red-500"}
+                  onClick={() => handleDeleteProject(project)}>
             Delete
           </button>
         </div>
         <p className={"font-bold text-stone-400 text-xl mb-4"}>
           {formatedProjectDate}
         </p>
-        <p>
+        <textarea className={"resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"}>
           {project.description}
-        </p>
+        </textarea>
 
         <hr className={"my-2 border-stone-200 border-2"}/>
 
