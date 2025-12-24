@@ -31,9 +31,8 @@ export default function ProjectDetail({project, handleAddTask, handleClearTask, 
         <p className={"font-bold text-stone-400 text-xl mb-4"}>
           {formatedProjectDate}
         </p>
-        <textarea className={"resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"}>
-          {project.description}
-        </textarea>
+        <textarea className={"resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"}
+                  value={project.description} />
 
         <hr className={"my-2 border-stone-200 border-2"}/>
 

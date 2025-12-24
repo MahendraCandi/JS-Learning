@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export default function AddProjectForm({ handleSaveProject, project }) {
+export default function AddProjectForm({ handleSaveProject, handleCancelSaveProject, project }) {
 
   const [projectInput, setProjectInput] = useState({
     title: '',
@@ -36,9 +36,9 @@ export default function AddProjectForm({ handleSaveProject, project }) {
 
   return (
     <div className="w-[35rem] mt-16">
-      <form className="mt-4 text-right" action="">
+      <form className="mt-4 text-right" action="" onSubmit={ (e) => e.preventDefault()}>
         <div className={"flex justify-end gap-4 mb-[2rem]"}>
-          <button className="text-stone-600 hover:text-stone-950">Cancel</button>
+          <button onClick={handleCancelSaveProject} className="text-stone-600 hover:text-stone-950">Cancel</button>
           <button onClick={handleSave} className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950">Save</button>
         </div>
 

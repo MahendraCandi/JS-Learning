@@ -42,6 +42,11 @@ function App() {
     setMainScreen(screen.NO_PROJECT_SELECTED);
   }
 
+  const handleCancelSaveProject = () => {
+    setSelectedProject(null);
+    setMainScreen(screen.NO_PROJECT_SELECTED);
+  }
+
   const handleOpenProject = (project) => {
     setSelectedProject(project);
     setMainScreen(screen.OPEN_PROJECT);
@@ -79,7 +84,10 @@ function App() {
       }
 
       {mainScreen === screen.CREATE_PROJECT &&
-        <AddProjectForm handleSaveProject={handleSaveProject} project={null}  />}
+        <AddProjectForm handleSaveProject={handleSaveProject}
+                        handleCancelSaveProject={handleCancelSaveProject}
+                        project={null}/>
+      }
 
       {
         mainScreen === screen.OPEN_PROJECT && selectedProject !== null &&
