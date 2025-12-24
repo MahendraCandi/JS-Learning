@@ -54,6 +54,13 @@ function App() {
     setProjects([...projects]);
   }
 
+  const handleClearTask = (project, task) => {
+    projects
+      .filter((p) => p === project)
+      .map((p) => p.tasks.splice(p.tasks.indexOf(task), 1));
+    setProjects([...projects]);
+  }
+
   return (
     <main className="h-screen my-8 flex gap-8">
       <SideBar projects={projects} handleOpenProject={handleOpenProject}
@@ -70,7 +77,7 @@ function App() {
       {
         mainScreen === screen.OPEN_PROJECT && selectedProject !== null &&
         // <AddProjectForm handleSaveProject={handleSaveProject} project={selectedProject}  />
-        <ProjectDetail project={selectedProject} handleAddTask={handleAddTask} />
+        <ProjectDetail project={selectedProject} handleAddTask={handleAddTask} handleClearTask={handleClearTask} />
       }
     </main>
   );

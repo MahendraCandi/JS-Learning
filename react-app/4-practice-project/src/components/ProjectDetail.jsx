@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export default function ProjectDetail({project, handleAddTask}) {
+export default function ProjectDetail({project, handleAddTask, handleClearTask}) {
   const [task, setTask] = useState('');
 
   const d = new Date(project.date);
@@ -60,7 +60,7 @@ export default function ProjectDetail({project, handleAddTask}) {
                     <li className={"my-5"} key={t}>
                       <div className={"flex justify-between px-3"}>
                         <p>{t}</p>
-                        <button>Clear</button>
+                        <button onClick={() => handleClearTask(project, t)}>Clear</button>
                       </div>
                     </li>
                   ))
