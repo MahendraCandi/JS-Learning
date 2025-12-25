@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import Input from "./Input.jsx";
 
 export default function AddProjectForm({ handleSaveProject, handleCancelSaveProject, project }) {
 
@@ -43,44 +44,23 @@ export default function AddProjectForm({ handleSaveProject, handleCancelSaveProj
         </div>
 
         <div className="flex flex-col gap-4">
-
-          {/* todo: wrap inputs into a component. Use textarea and ...props */}
-          <div className="flex flex-col gap-2">
-            <div className={"flex justify-start"}>
-              <label htmlFor="" className={"text-sm font-bold uppercase text-stone-500"}>Title</label>
-            </div>
-            <input type="text"
-                   className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-                   name="title"
-                   value={projectInput.title}
-                   onChange={changeProjectInput}
-            />
-          </div>
-
-          {/* todo: wrap inputs into a component. Use textarea and ...props */}
-          <div className="flex flex-col gap-2 ">
-            <div className={"flex justify-start"}>
-              <label htmlFor="" className={"text-sm font-bold uppercase text-stone-500"}>Description</label>
-            </div>
-            <textarea className="resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-                      name="description"
-                      value={projectInput.description}
-                      onChange={changeProjectInput}
-            />
-          </div>
-
-          {/* todo: wrap inputs into a component. Use textarea and ...props */}
-          <div className="flex flex-col gap-2">
-            <div className={"flex justify-start"}>
-              <label htmlFor="" className={"text-sm font-bold uppercase text-stone-500"}>Title</label>
-            </div>
-            <input type="date"
-                   className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-                   name="date"
-                   value={projectInput.date}
-                   onChange={changeProjectInput}
-            />
-          </div>
+          <Input name={"title"} label="Title"
+                 type="text"
+                 className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+                 value={projectInput.title}
+                 onChange={changeProjectInput}
+          />
+          <Input name={"description"} label="Description" textarea={true}
+                 className="resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+                 value={projectInput.description}
+                 onChange={changeProjectInput}
+          />
+          <Input name={"date"} label="Due Date"
+                 type="date"
+                 className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+                 value={projectInput.date}
+                 onChange={changeProjectInput}
+          />
         </div>
       </form>
     </div>
