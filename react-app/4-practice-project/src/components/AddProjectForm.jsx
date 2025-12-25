@@ -43,6 +43,8 @@ export default function AddProjectForm({ handleSaveProject, handleCancelSaveProj
         </div>
 
         <div className="flex flex-col gap-4">
+
+          {/* todo: wrap inputs into a component. Use textarea and ...props */}
           <div className="flex flex-col gap-2">
             <div className={"flex justify-start"}>
               <label htmlFor="" className={"text-sm font-bold uppercase text-stone-500"}>Title</label>
@@ -55,7 +57,8 @@ export default function AddProjectForm({ handleSaveProject, handleCancelSaveProj
             />
           </div>
 
-          <div className="flex flex-col gap-2">
+          {/* todo: wrap inputs into a component. Use textarea and ...props */}
+          <div className="flex flex-col gap-2 ">
             <div className={"flex justify-start"}>
               <label htmlFor="" className={"text-sm font-bold uppercase text-stone-500"}>Description</label>
             </div>
@@ -66,6 +69,7 @@ export default function AddProjectForm({ handleSaveProject, handleCancelSaveProj
             />
           </div>
 
+          {/* todo: wrap inputs into a component. Use textarea and ...props */}
           <div className="flex flex-col gap-2">
             <div className={"flex justify-start"}>
               <label htmlFor="" className={"text-sm font-bold uppercase text-stone-500"}>Title</label>
