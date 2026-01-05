@@ -1,7 +1,10 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Input from "./Input.jsx";
+import Modal from "./Modal.jsx";
 
 export default function AddProjectForm({ handleSaveProject, handleCancelSaveProject, project }) {
+
+  const modalRef = useRef();
 
   const [projectInput, setProjectInput] = useState({
     title: '',
@@ -20,6 +23,12 @@ export default function AddProjectForm({ handleSaveProject, handleCancelSaveProj
   }, [project])
 
   function handleSave() {
+    // validation
+    if (projectInput.title.trim() === '' || projectInput.description.trim() === '' || projectInput.date.trim() === '') {
+      modalRef.current.open();
+      return;
+    }
+
     handleSaveProject(
       projectInput.title,
       projectInput.description,
@@ -36,33 +45,41 @@ export default function AddProjectForm({ handleSaveProject, handleCancelSaveProj
   }
 
   return (
-    <div className="w-[35rem] mt-16">
-      <form className="mt-4 text-right" action="" onSubmit={ (e) => e.preventDefault()}>
-        <div className={"flex justify-end gap-4 mb-[2rem]"}>
-          <button onClick={handleCancelSaveProject} className="text-stone-600 hover:text-stone-950">Cancel</button>
-          <button onClick={handleSave} className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950">Save</button>
-        </div>
+    <>
+      <Modal ref={modalRef} >
+        <h2 className={"text-lg"}>Failed Save!</h2>
+        <hr className={"my-2 border-stone-200 border-2"}/>
+        <p className={"text-red-900"}>Some input is not valid</p>
+      </Modal>
 
-        <div className="flex flex-col gap-4">
-          <Input name={"title"} label="Title"
-                 type="text"
-                 className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-                 value={projectInput.title}
-                 onChange={changeProjectInput}
-          />
-          <Input name={"description"} label="Description" textarea={true}
-                 className="resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-                 value={projectInput.description}
-                 onChange={changeProjectInput}
-          />
-          <Input name={"date"} label="Due Date"
-                 type="date"
-                 className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-                 value={projectInput.date}
-                 onChange={changeProjectInput}
-          />
-        </div>
-      </form>
-    </div>
+      <div className="w-[35rem] mt-16">
+        <form className="mt-4 text-right" action="" onSubmit={ (e) => e.preventDefault()}>
+          <div className={"flex justify-end gap-4 mb-[2rem]"}>
+            <button onClick={handleCancelSaveProject} className="text-stone-600 hover:text-stone-950">Cancel</button>
+            <button onClick={handleSave} className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950">Save</button>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <Input name={"title"} label="Title"
+                   type="text"
+                   className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+                   value={projectInput.title}
+                   onChange={changeProjectInput}
+            />
+            <Input name={"description"} label="Description" textarea={true}
+                   className="resize-y  w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+                   value={projectInput.description}
+                   onChange={changeProjectInput}
+            />
+            <Input name={"date"} label="Due Date"
+                   type="date"
+                   className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
+                   value={projectInput.date}
+                   onChange={changeProjectInput}
+            />
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
