@@ -18,6 +18,8 @@ In this case, we can use Context API.
 
 From illustration above, we can see that Context API can be used in close children or in distant children.
 
+### Create context
+
 ```javascript
 // somewhere in a file
 import {createContext} from "react";
@@ -28,11 +30,32 @@ export const CartContext  = createContext({
 
 
 // somewhere in another file
-<CartContext.Provider>
+<CartContext.Provider value={ { items: [] } }>
     <Header/>
     <Shop />
 </CartContext.Provider>
 ```
 
-From above code example, we use context API to wrap Header and Shop components. 
+From above code example, we use context API to wrap Header and Shop components.
 Later, we can access the context item from deep inside in both Header and Shop components.
+
+### Consume context
+
+To consume the context, we can call `useContext` hook and pass the context object as parameter in any component inside the context;
+
+```javascript
+import {CartContext} from "...";
+import {useContext} from "react";
+
+export default function Cart({ ... }) {
+  const {items} = useContext(CartContext);
+
+  return (
+    <div>
+      {items.length === 0 && <p>No items in cart!</p>}
+      {items.length > 0 && (...)}
+    </div>
+  );
+}
+
+```
