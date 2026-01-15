@@ -59,3 +59,88 @@ export default function Cart({ ... }) {
 }
 
 ```
+
+### Complete looks of using Context
+
+> By using Context API, we don't have to pass props down manually from parent to child components.
+
+```javascript
+// ./store/shopping-cart-context.jsx
+// It is a common practice to create context object in a separate file.
+// Usually, this file is placed inside a package named 'store'.
+import {createContext} from "react";
+
+// Default value inside this context is used as auto-complete for later when we call the value of this context.
+// The real value will be passed when we wrap components using this context.
+export const CartContext = createContext({
+  items: [],
+  addItemToCart: () => {},
+  updateItemInCart: () => {}
+});
+```
+
+```javascript
+// main app file
+// See how the Context object wrapped the Header and Shop components.
+// Notice the property 'value' inside the Context.Provider component, which is the real value of this context.
+function App() {
+  const [shoppingCart, setShoppingCart] = useState({
+    items: [],
+  });
+
+  function handleAddItemToCart(id) {};
+  function handleUpdateCartItemQuantity(productId, amount) {};
+
+  // Initalize the value of this context.
+  const cartCtx = {
+    items: shoppingCart.items,
+    addItemToCart: handleAddItemToCart,
+    updateItemInCart: handleUpdateCartItemQuantity,
+  }
+
+  return (
+    <CartContext.Provider value={ cartCtx }>
+      <Header/>
+      <Shop/>
+    </CartContext.Provider>
+  );
+}
+```
+
+```javascript
+// Using items and updateItemInCart from context.
+export default function Cart() {
+    const { items, updateItemInCart } = useContext(CartContext);
+    // ...
+    return (
+        <div id="cart">
+            {items.length === 0 && <p>No items in cart!</p>}
+            {items.length > 0 && (
+                <ul id="cart-items">
+                    {items.map((item) => {
+                        const formattedPrice = `$${item.price.toFixed(2)}`;
+
+                        return (
+                            <li key={item.id}>
+                                <div>
+                                    <span>{item.name}</span>
+                                    <span> ({formattedPrice})</span>
+                                </div>
+                                <div className="cart-item-actions">
+                                    <button onClick={() => updateItemInCart(item.id, -1)}>
+                                        -
+                                    </button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => updateItemInCart(item.id, 1)}>
+                                        +
+                                    </button>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
+        </div>
+    );
+}
+```
