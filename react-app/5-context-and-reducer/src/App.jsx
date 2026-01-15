@@ -66,13 +66,16 @@ function App() {
     });
   }
 
+  const cartCtx = {
+    items: shoppingCart.items,
+    addItemToCart: handleAddItemToCart,
+    updateItemInCart: handleUpdateCartItemQuantity,
+  }
+
   return (
-    <CartContext.Provider value={ shoppingCart }>
-      <Header
-        cart={shoppingCart}
-        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-      />
-      <Shop onAddItemToCart={handleAddItemToCart} />
+    <CartContext.Provider value={ cartCtx }>
+      <Header/>
+      <Shop/>
     </CartContext.Provider>
   );
 }

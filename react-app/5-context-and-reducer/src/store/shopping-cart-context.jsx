@@ -8,6 +8,8 @@ import {createContext} from "react";
 // <CartContext.Provider value={ { items: [] } }>
 // ...
 // </CartContext.Provider>
-export const CartContext  = createContext({
-    items: [],
+export const CartContext = createContext({
+  items: [],
+  addItemToCart: () => {},
+  updateItemInCart: () => {}
 });
