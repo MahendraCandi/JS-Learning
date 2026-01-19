@@ -245,3 +245,119 @@ function App() {
     );
 }
 ```
+
+## UseReducer API
+
+> The idea is to simplify multiple CRUD function (or another one...) that modified a state into a single function. 
+> * Very useful when we have a complex CRUD for a state.
+
+### Transform a useState with useReducer
+
+From the example project, the state `shoppingCart` has multiple functions to add and update item to/from cart.
+These function could be simplified into a reducer, as a result we will have a single responsibility function to modify the `shoppingCart`
+
+#### 1. create reducer function
+
+This reducer function is the main function to manage the state.
+This function will have two parameter, the latest state value and the action object.
+
+The 'action object' is an object that hold information which action (Create, update, delete, or any another action) that would be applied to state.
+Conventionally, action object would have properties: type and payload. Where type to determine the action and payload to pass parameters to the function.
+
+```javascript
+// A code inside file shopping-cart-reducer.jsx
+
+export const shoppingCartReducer = (shoppingCartState, action) => {
+    switch (action.type) {
+        case 'ADD_ITEM_TO_CART': {
+            const updatedItems = [...shoppingCartState.items];
+            // hide another code
+            const product = DUMMY_PRODUCTS.find((product) => product.id === action.payload.id);
+            updatedItems.push({
+                id: action.payload.id,
+                name: product.title,
+                price: product.price,
+                quantity: 1,
+            });
+            // hide another code
+            return {
+                ...shoppingCartState,
+                items: updatedItems,
+            };
+        }
+        case 'UPDATE_ITEM_IN_CART': {
+            const updatedItems = [...shoppingCartState.items];
+            const updatedItemIndex = updatedItems.findIndex(
+                (item) => item.id === action.payload.productId
+            );
+            const updatedItem = {
+                ...updatedItems[updatedItemIndex],
+            };
+            // hide another code
+            return {
+                ...shoppingCartState,
+                items: updatedItems,
+            };
+        }
+    }
+}
+```
+
+#### 2. Replace useState with useReducer
+
+In the invoker file that needs the reducer, we can replace the `useState` to `useReducer`.
+
+useReducer function consumes two parameters, the reducer function and the initial state. Also it returns two variable,
+the state and dispatch function. 
+
+* The state is a state similar with `useState`.
+* The dispatch is a function to trigger the reducer function. This is the different from the `useState
+
+The dispatch function accepts an 'action object', to pass determine which flow to be executed in the reducer function.
+From below code notice the:
+
+* `type` property: to determine what action should be applied to the state.
+* `payload` property: to pass additional info to reducer.
+
+```javascript
+import {createContext, useReducer} from "react";
+import {shoppingCartReducer} from "./shopping-cart-reducer.jsx";
+
+export default function CartContextProvider({children}) {
+    // const [shoppingCart, setShoppingCart] = useState({items: []});
+    const [shoppingCartState, dispatch] = useReducer(shoppingCartReducer, {items: []})
+
+    function handleAddItemToCart(id) {
+        // will trigger the path ADD_ITEM_TO_CART in shoppingCartReducer
+        dispatch({
+            type: 'ADD_ITEM_TO_CART', // this type should be equal to reducer function
+            payload: {
+                id
+            }
+        });
+    }
+
+    function handleUpdateCartItemQuantity(productId, amount) {
+        // will trigger path UPDATE_ITEM_IN_CART in shoppingCartReducer
+        dispatch({
+            type: 'UPDATE_ITEM_IN_CART', // this type should be equal to reducer function
+            payload: {
+                productId,
+                amount
+            }
+        });
+    }
+
+    const cartCtx = {
+        items: shoppingCartState.items,
+        addItemToCart: handleAddItemToCart,
+        updateItemInCart: handleUpdateCartItemQuantity,
+    }
+
+    return (
+        <CartContext.Provider value={ cartCtx }>
+            {children}
+        </CartContext.Provider>
+    );
+}
+```
