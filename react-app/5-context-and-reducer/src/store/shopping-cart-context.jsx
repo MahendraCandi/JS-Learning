@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useReducer} from "react";
 import {DUMMY_PRODUCTS} from "../dummy-products.js";
 
 // Create a new context object.
@@ -15,18 +15,19 @@ export const CartContext = createContext({
   updateItemInCart: () => {}
 });
 
-// By using this we can has a single responsibility for the context provider.
-export default function CartContextProvider({children}) {
-  const [shoppingCart, setShoppingCart] = useState({
-    items: [],
-  });
-
-  function handleAddItemToCart(id) {
-    setShoppingCart((prevShoppingCart) => {
-      const updatedItems = [...prevShoppingCart.items];
+/**
+ * Function represent the useReducer. This function will be triggered by `dispatch` function by `useReducer`.
+ * @param shoppingCartState The state value. Guarantee to be always the latest state by React `useReducer`.
+ * @param action The object would be proceeded by this function.
+ *                Should have `type` property and `payload` to determine which action and what data is passed.
+ */
+const shoppingCartReducer = (shoppingCartState, action) => {
+  switch (action.type) {
+    case 'ADD_ITEM_TO_CART': {
+      const updatedItems = [...shoppingCartState.items];
 
       const existingCartItemIndex = updatedItems.findIndex(
-          (cartItem) => cartItem.id === id
+          (cartItem) => cartItem.id === action.payload.id
       );
       const existingCartItem = updatedItems[existingCartItemIndex];
 
@@ -37,9 +38,9 @@ export default function CartContextProvider({children}) {
         };
         updatedItems[existingCartItemIndex] = updatedItem;
       } else {
-        const product = DUMMY_PRODUCTS.find((product) => product.id === id);
+        const product = DUMMY_PRODUCTS.find((product) => product.id === action.payload.id);
         updatedItems.push({
-          id: id,
+          id: action.payload.id,
           name: product.title,
           price: product.price,
           quantity: 1,
@@ -47,23 +48,21 @@ export default function CartContextProvider({children}) {
       }
 
       return {
+        ...shoppingCartState,
         items: updatedItems,
       };
-    });
-  }
-
-  function handleUpdateCartItemQuantity(productId, amount) {
-    setShoppingCart((prevShoppingCart) => {
-      const updatedItems = [...prevShoppingCart.items];
+    }
+    case 'UPDATE_ITEM_IN_CART': {
+      const updatedItems = [...shoppingCartState.items];
       const updatedItemIndex = updatedItems.findIndex(
-          (item) => item.id === productId
+          (item) => item.id === action.payload.productId
       );
 
       const updatedItem = {
         ...updatedItems[updatedItemIndex],
       };
 
-      updatedItem.quantity += amount;
+      updatedItem.quantity += action.payload.amount;
 
       if (updatedItem.quantity <= 0) {
         updatedItems.splice(updatedItemIndex, 1);
@@ -72,13 +71,38 @@ export default function CartContextProvider({children}) {
       }
 
       return {
+        ...shoppingCartState,
         items: updatedItems,
       };
+    }
+  }
+}
+
+// By using this we can has a single responsibility for the context provider.
+export default function CartContextProvider({children}) {
+  const [shoppingCartState, shoppingCartDispatch] = useReducer(shoppingCartReducer, {items: []})
+
+  function handleAddItemToCart(id) {
+    shoppingCartDispatch({
+      type: 'ADD_ITEM_TO_CART',
+      payload: {
+        id
+      }
+    });
+  }
+
+  function handleUpdateCartItemQuantity(productId, amount) {
+    shoppingCartDispatch({
+      type: 'UPDATE_ITEM_IN_CART',
+      payload: {
+        productId,
+        amount
+      }
     });
   }
 
   const cartCtx = {
-    items: shoppingCart.items,
+    items: shoppingCartState.items,
     addItemToCart: handleAddItemToCart,
     updateItemInCart: handleUpdateCartItemQuantity,
   }
