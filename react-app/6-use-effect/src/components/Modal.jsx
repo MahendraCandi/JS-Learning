@@ -1,26 +1,26 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import {useRef} from 'react';
+import {createPortal} from 'react-dom';
 
-const Modal = forwardRef(function Modal({ children }, ref) {
+function Modal({ children, isModalOpen }) {
   const dialog = useRef();
 
-  useImperativeHandle(ref, () => {
-    return {
-      open: () => {
-        dialog.current.showModal();
-      },
-      close: () => {
-        dialog.current.close();
-      },
-    };
-  });
+  // When the first time the application launches, these lines of code will throw an error.
+  // The error should be "Cannot read properties of undefined (reading 'close')". 'close' is pointing to function "dialog.current.close();"
+  // The error happens because the JSX code is not executed yet.
+  // As a result, the DOM is not ready yet, and the "dialog ref" is not bound with the "dialog HTML element".
+  // Therefore, the "dialog reff" has an undefined value, then "dialog.current.close()" will throw an error.
+  if (isModalOpen) {
+    dialog.current.showModal();
+  } else {
+    dialog.current.close();
+  }
 
   return createPortal(
-    <dialog className="modal" ref={dialog}>
-      {children}
-    </dialog>,
-    document.getElementById('modal')
+      <dialog className="modal" ref={dialog}>
+        {children}
+      </dialog>,
+      document.getElementById('modal')
   );
-});
+}
 
 export default Modal;
