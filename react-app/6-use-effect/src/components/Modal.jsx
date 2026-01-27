@@ -1,4 +1,4 @@
-import {useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {createPortal} from 'react-dom';
 
 function Modal({ children, isModalOpen }) {
@@ -9,11 +9,15 @@ function Modal({ children, isModalOpen }) {
   // The error happens because the JSX code is not executed yet.
   // As a result, the DOM is not ready yet, and the "dialog ref" is not bound with the "dialog HTML element".
   // Therefore, the "dialog reff" has an undefined value, then "dialog.current.close()" will throw an error.
-  if (isModalOpen) {
-    dialog.current.showModal();
-  } else {
-    dialog.current.close();
-  }
+  // ---
+  // To solve this issue, we can use the useEffect hook to execute the state after the DOM is ready.
+  useEffect(() => {
+    if (isModalOpen) {
+      dialog.current.showModal();
+    } else {
+      dialog.current.close();
+    }
+  }, [isModalOpen]);
 
   return createPortal(
       <dialog className="modal" ref={dialog}>
