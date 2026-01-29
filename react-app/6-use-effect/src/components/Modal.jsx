@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react';
 import {createPortal} from 'react-dom';
 
-function Modal({ children, isModalOpen }) {
+function Modal({ children, isModalOpen, onClose }) {
   const dialog = useRef();
 
   // When the first time the application launches, these lines of code will throw an error.
@@ -20,8 +20,8 @@ function Modal({ children, isModalOpen }) {
   }, [isModalOpen]);
 
   return createPortal(
-      <dialog className="modal" ref={dialog}>
-        {children}
+      <dialog className="modal" ref={dialog} onClose={onClose}>
+        {isModalOpen ? children : null}
       </dialog>,
       document.getElementById('modal')
   );

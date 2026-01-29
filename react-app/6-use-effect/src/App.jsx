@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 import Places from './components/Places.jsx';
 import {AVAILABLE_PLACES} from './data.js';
@@ -68,18 +68,20 @@ function App() {
     setSelectedPlaceToStorage(id);
   }
 
-  function handleRemovePlace() {
+  // useCallback to avoid a function recreate during component rendered.
+  // best suite when we use this function as useEffect dependencies.
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     setIsModalOpen(false);
 
     removeSelectedPlace(selectedPlace);
-  }
+  }, []);
 
   return (
     <>
-      <Modal isModalOpen={isModalOpen}>
+      <Modal isModalOpen={isModalOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
