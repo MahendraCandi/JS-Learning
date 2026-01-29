@@ -1,4 +1,7 @@
 import {useEffect} from "react";
+import ProgressBar from "refs-demo-project/src/components/ProgressBar.jsx";
+
+const TIMER_DURATION = 3000;
 
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
   // A problem with function as useEffect dependencies will produce an infinite loop.
@@ -10,7 +13,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
     console.log("Set timer");
     const timeout = setTimeout(() => {
       onConfirm();
-    }, 3000);
+    }, TIMER_DURATION);
 
     return () => {
         console.log("Clear timer");
@@ -30,6 +33,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Yes
         </button>
       </div>
+      <ProgressBar timer={TIMER_DURATION}/>
     </div>
   );
 }
