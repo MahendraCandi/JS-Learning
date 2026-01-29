@@ -162,6 +162,8 @@ header h1 {
   background: #6cb7f5;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .answer button:hover,
