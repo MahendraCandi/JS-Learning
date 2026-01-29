@@ -20,9 +20,9 @@ function setSelectedPlaceToStorage(id) {
   }
 }
 
-function removeSelectedPlace(id) {
+function removeSelectedPlace(selectedPlace) {
   const storedPlaceIds = getSelectedPlacesFromStorage();
-  localStorage.setItem(SELECTED_PLACES_KEY, JSON.stringify(storedPlaceIds.filter((id) => id !== id.current)));
+  localStorage.setItem(SELECTED_PLACES_KEY, JSON.stringify(storedPlaceIds.filter((id) => id !== selectedPlace)));
 }
 
 // this code didn't require useEffect because this code can execute synchronously
@@ -50,6 +50,7 @@ function App() {
   function handleStartRemovePlace(id) {
     setIsModalOpen(true);
     selectedPlace.current = id;
+    console.log(`selected place: ${selectedPlace.current}`);
   }
 
   function handleStopRemovePlace() {
@@ -71,12 +72,13 @@ function App() {
   // useCallback to avoid a function recreate during component rendered.
   // best suite when we use this function as useEffect dependencies.
   const handleRemovePlace = useCallback(function handleRemovePlace() {
+    console.log(`selected place: ${selectedPlace.current}`);
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     setIsModalOpen(false);
 
-    removeSelectedPlace(selectedPlace);
+    removeSelectedPlace(selectedPlace.current);
   }, []);
 
   return (
