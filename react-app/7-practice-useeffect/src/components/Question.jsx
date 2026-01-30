@@ -1,16 +1,27 @@
 import ProgressBar from "./ProgressBar.jsx";
+import {useEffect} from "react";
 
-export default function Question({question, answerList}) {
+const TIMER = 7000;
+
+export default function Question({id, question, answerList, onNextQuestion}) {
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      onNextQuestion(id, null);
+    }, TIMER);
+    return () => clearTimeout(timeout);
+  }, [onNextQuestion]);
+
   return (
     <>
       <section id={"question"}>
-        <ProgressBar timer={15000} />
+        <ProgressBar maxTimer={TIMER} refresh={question} />
         <h2>{question}</h2>
       </section>
       <section id={"answers"}>
         <div className={"answer"}>
           {
-            answerList.map(answer => <button key={answer}>{answer}</button>)
+            answerList.map(answer => <button key={answer} onClick={() => onNextQuestion(id, answer)} >{answer}</button>)
           }
         </div>
       </section>

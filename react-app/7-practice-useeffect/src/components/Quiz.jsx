@@ -1,33 +1,56 @@
 import Question from "./Question.jsx";
 import QUESTIONS_DUMMY from "../questions.js";
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import Summary from "./Summary.jsx";
 
-const USER_ANSWERED_KEY = "userAnsweredKey";
-
-const getUserAnsweredList = () => {
-  return JSON.parse(localStorage.getItem(USER_ANSWERED_KEY)) || []; // {id, answer}
+const shuffle = (array) => {
+  return array.sort(() => Math.random() - 0.5);
 }
 
-const setUserAnsweredToList = (questionKey, answer) => {
-  const userAnsweredList = getUserAnsweredList();
-  const answeredQuestion = userAnsweredList.find(question => question.id !== questionKey);
-  if (answeredQuestion === undefined) {
-    userAnsweredList.push({id: questionKey, answer});
-  } else {
-    answeredQuestion.answer = answer;
-  }
-}
-
-// todo complete local storage initializations
+const shuffledQuestions = shuffle(QUESTIONS_DUMMY);
 
 export default function Quiz() {
-  // todo complete states
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[currentQuestionIndex]);
+  const [userAnsweredList, setUserAnsweredList] = useState([]);
+  const [isShowSummary, setIsShowSummary] = useState(false);
+
+  const saveAndUpdateUserAnsweredToList = (questionKey, answer) => {
+    setUserAnsweredList([
+      ...userAnsweredList,
+      {
+        id: questionKey,
+        answer: answer
+      }
+    ]);
+  }
+
+  const goToNextQuestion = (id, answer) => {
+    saveAndUpdateUserAnsweredToList(id, answer);
+
+    const nextQuestionIndex = currentQuestionIndex + 1;
+    if (nextQuestionIndex >= QUESTIONS_DUMMY.length) {
+      setIsShowSummary(true);
+      return;
+    }
+
+    setCurrentQuestionIndex(nextQuestionIndex);
+    setCurrentQuestion(QUESTIONS_DUMMY[nextQuestionIndex]);
+  }
+
   return (
     <div id={"quiz"}>
-      <Question
-        question={"How do you typically render list content in React apps?"}
-        answerList={["By using loop", "By using map", "By using render prop"]}
-      />
+      {
+        isShowSummary ?
+          <Summary answeredList={userAnsweredList}/>
+          :
+          <Question
+            id={currentQuestion.id}
+            question={currentQuestion.text}
+            answerList={currentQuestion.answers}
+            onNextQuestion={goToNextQuestion}
+          />
+      }
     </div>
   );
 }
