@@ -15,18 +15,19 @@ export default function Quiz() {
   const [userAnsweredList, setUserAnsweredList] = useState([]);
   const [isShowSummary, setIsShowSummary] = useState(false);
 
-  const saveAndUpdateUserAnsweredToList = (questionKey, answer) => {
+  const saveAndUpdateUserAnsweredToList = (questionKey, answer, question) => {
     setUserAnsweredList([
       ...userAnsweredList,
       {
         id: questionKey,
-        answer: answer
+        answer,
+        question
       }
     ]);
   }
 
-  const goToNextQuestion = (id, answer) => {
-    saveAndUpdateUserAnsweredToList(id, answer);
+  const goToNextQuestion = (id, answer, question) => {
+    saveAndUpdateUserAnsweredToList(id, answer, question);
 
     const nextQuestionIndex = currentQuestionIndex + 1;
     if (nextQuestionIndex >= QUESTIONS_DUMMY.length) {
@@ -42,7 +43,7 @@ export default function Quiz() {
     <div id={"quiz"}>
       {
         isShowSummary ?
-          <Summary answeredList={userAnsweredList}/>
+          <Summary answeredList={userAnsweredList} questionList={QUESTIONS_DUMMY}/>
           :
           <Question
             id={currentQuestion.id}

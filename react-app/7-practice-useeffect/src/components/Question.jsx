@@ -7,7 +7,7 @@ export default function Question({id, question, answerList, onNextQuestion}) {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onNextQuestion(id, null);
+      onNextQuestion(id, "Skipped", question);
     }, TIMER);
     return () => clearTimeout(timeout);
   }, [onNextQuestion]);
@@ -21,7 +21,7 @@ export default function Question({id, question, answerList, onNextQuestion}) {
       <section id={"answers"}>
         <div className={"answer"}>
           {
-            answerList.map(answer => <button key={answer} onClick={() => onNextQuestion(id, answer)} >{answer}</button>)
+            answerList.map(answer => <button key={answer} onClick={() => onNextQuestion(id, answer, question)} >{answer}</button>)
           }
         </div>
       </section>
