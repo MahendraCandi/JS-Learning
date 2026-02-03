@@ -46,7 +46,7 @@ export default function Quiz() {
           <Question
             id={currentQuestion.id}
             question={currentQuestion.text}
-            answerList={currentQuestion.answers}
+            answerList={shuffle(currentQuestion.answers)}
             onNextQuestion={goToNextQuestion}
           />
       }
