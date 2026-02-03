@@ -10,9 +10,8 @@ const shuffle = (array) => {
 const shuffledQuestions = shuffle(QUESTIONS_DUMMY);
 
 export default function Quiz() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[currentQuestionIndex]);
   const [userAnsweredList, setUserAnsweredList] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[0]);
   const [isShowSummary, setIsShowSummary] = useState(false);
 
   const saveAndUpdateUserAnsweredToList = (questionKey, answer, question) => {
@@ -29,13 +28,12 @@ export default function Quiz() {
   const goToNextQuestion = (id, answer, question) => {
     saveAndUpdateUserAnsweredToList(id, answer, question);
 
-    const nextQuestionIndex = currentQuestionIndex + 1;
+    const nextQuestionIndex = userAnsweredList.length + 1;
     if (nextQuestionIndex >= QUESTIONS_DUMMY.length) {
       setIsShowSummary(true);
       return;
     }
 
-    setCurrentQuestionIndex(nextQuestionIndex);
     setCurrentQuestion(QUESTIONS_DUMMY[nextQuestionIndex]);
   }
 
