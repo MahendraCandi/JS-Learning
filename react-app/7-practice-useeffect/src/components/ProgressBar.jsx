@@ -1,7 +1,14 @@
 import {useEffect, useState} from "react";
 
-export default function ProgressBar({maxTimer, refresh}) {
+export default function ProgressBar({maxTimer, onTimeUp}) {
   const [remainingTime, setRemainingTime] = useState(maxTimer)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      onTimeUp();
+    }, maxTimer);
+    return () => clearTimeout(timeout);
+  }, [onTimeUp]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -14,8 +21,7 @@ export default function ProgressBar({maxTimer, refresh}) {
       clearInterval(interval);
       setRemainingTime(maxTimer);
     }
-
-  }, [refresh])
+  }, []) // remove property 'refresher' as dependency, use component key to re-render the component instead.
 
   return <progress value={remainingTime} max={maxTimer} />
 }
