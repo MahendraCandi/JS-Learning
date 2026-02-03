@@ -1,6 +1,6 @@
 import Question from "./Question.jsx";
 import QUESTIONS_DUMMY from "../questions.js";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import Summary from "./Summary.jsx";
 
 const shuffle = (array) => {
@@ -14,7 +14,7 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[0]);
   const [isShowSummary, setIsShowSummary] = useState(false);
 
-  const saveAndUpdateUserAnsweredToList = (questionKey, answer, question) => {
+  const saveAndUpdateUserAnsweredToList = useCallback((questionKey, answer, question) => {
     setUserAnsweredList([
       ...userAnsweredList,
       {
@@ -23,9 +23,9 @@ export default function Quiz() {
         question
       }
     ]);
-  }
+  }, [userAnsweredList]);
 
-  const goToNextQuestion = (id, answer, question) => {
+  const goToNextQuestion = useCallback((id, answer, question) => {
     saveAndUpdateUserAnsweredToList(id, answer, question);
 
     const nextQuestionIndex = userAnsweredList.length + 1;
@@ -35,7 +35,7 @@ export default function Quiz() {
     }
 
     setCurrentQuestion(QUESTIONS_DUMMY[nextQuestionIndex]);
-  }
+  }, [userAnsweredList]);
 
   return (
     <div id={"quiz"}>
