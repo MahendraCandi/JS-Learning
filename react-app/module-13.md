@@ -47,3 +47,7 @@ Also, memo only works if only the parent component is changing.
 1. If use in high up component will prevent the child component from rendering.
 2. checking props is expensive operation cost lot performance, will only add unnecessary check.
 3. Don't use it on component where props change frequently.
+
+## Create new component rather than use memo()
+
+By creating a new component and delegate the state into child component, we can prevent the parent being rendered.
