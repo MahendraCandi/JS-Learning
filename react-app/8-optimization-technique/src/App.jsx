@@ -10,12 +10,14 @@ function App() {
 
   const [chosenCount, setChosenCount] = useState(0);
 
+  // Using key in component can trigger a re-render when key value is changes.
+  // very useful when we want to trigger child component being re-render after parent state changes.
   return (
     <>
       <Header />
       <main>
         <CounterConfiguration onEvent={setChosenCount} />
-        <Counter initialCount={chosenCount} />
+        <Counter key={chosenCount} initialCount={chosenCount} />
       </main>
     </>
   );

@@ -54,7 +54,7 @@ By creating a new component and delegate the state into child component, we can 
 
 ## memo and useCallback
 
-Since memo only check props, what if the props is a function? 
+Since memo only check props, what if the props is a function?
 Function inside React app will also trigger be rendered every time the component rendered.
 
 To prevent this, we can use useCallback() to wrap the function passed into props.
@@ -64,7 +64,7 @@ Suite for function passed into props.
 ## useMemo
 
 its not same as memo. If memo works on component function, useMemo is works on common function.
-useMemo will memoize a result of a function. This is very useful when we have complex calculation 
+useMemo will memoize a result of a function. This is very useful when we have complex calculation
 and don't want to re-calculate every time the component rendered.
 
 Different with useCallback are the useMemo will memoize the result of a function and not the function itself.
@@ -72,3 +72,33 @@ Different with useCallback are the useMemo will memoize the result of a function
 ### Don't over use useMemo!
 
 1. it will cost performance to check the dependency passed into useMemo.
+
+## key props
+
+Very useful for list to only update the new item in the list not all item rendered.
+Very useful for component to trigger re-render when props in parent changed.
+
+```javascript
+// using key inside a list
+<ol>
+  {history.map((count) => (
+    <HistoryItem key={count.id} count={count.value} />
+  ))}
+</ol>
+```
+
+```javascript
+// using key inside a component
+function App() {
+  const [chosenCount, setChosenCount] = useState(0);
+
+  return (
+    <>
+      <main>
+        // ...
+        <Counter key={chosenCount} initialCount={chosenCount} />
+      </main>
+    </>
+  );
+}
+```
