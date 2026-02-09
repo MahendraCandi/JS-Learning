@@ -51,3 +51,12 @@ Also, memo only works if only the parent component is changing.
 ## Create new component rather than use memo()
 
 By creating a new component and delegate the state into child component, we can prevent the parent being rendered.
+
+## memo and useCallback
+
+Since memo only check props, what if the props is a function? 
+Function inside React app will also trigger be rendered every time the component rendered.
+
+To prevent this, we can use useCallback() to wrap the function passed into props.
+useCallback will prevent a function from being re-created every time the component rendered.
+Suite for function passed into props.
