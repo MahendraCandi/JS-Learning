@@ -11,7 +11,8 @@ const shuffledQuestions = shuffle(QUESTIONS_DUMMY);
 
 export default function Quiz() {
   const [userAnsweredList, setUserAnsweredList] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[0]);
+  // todo IMPROVE APP BY MINIMIZE STATE: its better to state only ID
+  const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[0])
   const [isShowSummary, setIsShowSummary] = useState(false);
 
   const saveAndUpdateUserAnsweredToList = useCallback((questionKey, answer, question) => {
@@ -44,6 +45,7 @@ export default function Quiz() {
           <Summary answeredList={userAnsweredList} questionList={QUESTIONS_DUMMY}/>
           :
           <Question
+            key={currentQuestion.id}
             id={currentQuestion.id}
             question={currentQuestion.text}
             answerList={shuffle(currentQuestion.answers)}
