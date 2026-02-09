@@ -60,3 +60,15 @@ Function inside React app will also trigger be rendered every time the component
 To prevent this, we can use useCallback() to wrap the function passed into props.
 useCallback will prevent a function from being re-created every time the component rendered.
 Suite for function passed into props.
+
+## useMemo
+
+its not same as memo. If memo works on component function, useMemo is works on common function.
+useMemo will memoize a result of a function. This is very useful when we have complex calculation 
+and don't want to re-calculate every time the component rendered.
+
+Different with useCallback are the useMemo will memoize the result of a function and not the function itself.
+
+### Don't over use useMemo!
+
+1. it will cost performance to check the dependency passed into useMemo.
