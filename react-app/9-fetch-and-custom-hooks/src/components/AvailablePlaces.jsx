@@ -1,28 +1,40 @@
 import Places from './Places.jsx';
+import Error from './Error.jsx';
 import {useEffect, useState} from "react";
+import {sortPlacesByDistance} from "../loc.js";
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [availablePlaces, setAvailablePlaces] = useState([])
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch('http://localhost:3000/places');
         if (!response.ok) {
-          throw new Error("Damn");
+          throw new Error("response not ok");
         }
 
         const json = await response.json();
-        console.log(json.places, 'json');
-        console.log(json);
-        setAvailablePlaces(json.places);
+        navigator.geolocation.getCurrentPosition((position) => {
+          const sortedPlaces = sortPlacesByDistance(json.places, position.coords.latitude, position.coords.longitude)
+          setAvailablePlaces(sortedPlaces);
+          setIsLoading(false);
+        })
       } catch (e) {
-        console.error(e);
-        throw e;
+        setError(e);
       }
     }
+
     fetchPlaces();
-  }, [availablePlaces]) // fixme: why this always regenerate the component
+  }, []);
+
+  if (error !== null) {
+    return <Error title={"Failed to load places."} message={error.message} onConfirm={() => setError(null)} />
+  }
 
   return (
     <Places
@@ -30,6 +42,8 @@ export default function AvailablePlaces({ onSelectPlace }) {
       places={availablePlaces}
       fallbackText="No places available."
       onSelectPlace={onSelectPlace}
+      isLoading={isLoading}
+      loadingText={"Loading places..."}
     />
   );
 }
