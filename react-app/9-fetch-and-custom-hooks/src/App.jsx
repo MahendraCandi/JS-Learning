@@ -15,12 +15,16 @@ function App() {
   const [errorOperation, setErrorOperation] = useState(null);
 
   useEffect(() => {
-    fetchUserPlaces()
-      .then(places => setUserPlaces(places))
-      .catch((error) => {
-        console.error(error);
-        setErrorOperation('Failed to load user places.')
-      });
+    async function fetchSelectedPlaces() {
+      try {
+        const places = await fetchUserPlaces();
+        setUserPlaces(places);
+      } catch (e) {
+        console.error(e);
+        setErrorOperation('Failed to load user places.');
+      }
+    }
+    fetchSelectedPlaces();
   }, []);
 
   function handleStartRemovePlace(place) {
