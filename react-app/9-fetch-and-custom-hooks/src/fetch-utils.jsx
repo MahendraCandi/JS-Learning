@@ -27,3 +27,20 @@ export async function updateUserPlaces(userPlaces) {
   const json = await response.json();
   return json.message;
 }
+
+export async function fetchUserPlaces() {
+  const response = await fetch(
+    `http://localhost:3000/user-places`,
+    {
+      method: 'GET',
+      headers: {'Accept': 'application/json'}
+    });
+
+  if (!response.ok) {
+    console.error(response);
+    throw new Error("Failed to fetch user places");
+  }
+
+  const json = await response.json();
+  return json.places;
+}

@@ -1,20 +1,22 @@
-import { useRef, useState, useCallback } from 'react';
+import {useRef, useState, useCallback, useEffect} from 'react';
 
 import Places from './components/Places.jsx';
 import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
-import {updateUserPlaces} from "./fetch-utils.jsx";
+import {fetchUserPlaces, updateUserPlaces} from "./fetch-utils.jsx";
 import Error from "./components/Error.jsx";
 
 function App() {
   const selectedPlace = useRef();
-
   const [userPlaces, setUserPlaces] = useState([]);
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorOperation, setErrorOperation] = useState(null);
+
+  useEffect(() => {
+    fetchUserPlaces().then(places => setUserPlaces(places));
+  }, []);
 
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
