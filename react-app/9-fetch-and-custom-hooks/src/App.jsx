@@ -6,6 +6,7 @@ import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
 import {updateUserPlaces} from "./fetch-utils.jsx";
+import Error from "./components/Error.jsx";
 
 function App() {
   const selectedPlace = useRef();
@@ -13,6 +14,7 @@ function App() {
   const [userPlaces, setUserPlaces] = useState([]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [errorOperation, setErrorOperation] = useState(null);
 
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
@@ -35,7 +37,7 @@ function App() {
       });
     } catch (e) {
       console.error(e);
-      throw e; // todo do something better than just rethrowing the error
+      setErrorOperation(e.message || 'Failed to update user places.');
     }
   }
 
@@ -49,6 +51,14 @@ function App() {
 
   return (
     <>
+      <Modal open={errorOperation !== null} onClose={() => setErrorOperation(null)}>
+        <Error
+          title={"Failed do operation."}
+          message={errorOperation}
+          onConfirm={() => setErrorOperation(null)}
+        />
+      </Modal>
+
       <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
