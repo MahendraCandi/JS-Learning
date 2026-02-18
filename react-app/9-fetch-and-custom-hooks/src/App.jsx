@@ -44,9 +44,15 @@ function App() {
   }
 
   const handleRemovePlace = useCallback(async function handleRemovePlace() {
-    setUserPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
-    );
+    try {
+      await updateUserPlaces(userPlaces.filter((place) => place.id !== selectedPlace.current.id));
+      setUserPlaces((prevPickedPlaces) =>
+        prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
+      );
+    } catch (e) {
+      console.error(e);
+      setErrorOperation('Failed to remove user places.');
+    }
 
     setModalIsOpen(false);
   }, []);
