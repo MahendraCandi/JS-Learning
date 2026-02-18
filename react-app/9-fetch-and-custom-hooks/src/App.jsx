@@ -5,6 +5,7 @@ import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
+import {updateUserPlaces} from "./fetch-utils.jsx";
 
 function App() {
   const selectedPlace = useRef();
@@ -22,16 +23,20 @@ function App() {
     setModalIsOpen(false);
   }
 
-  function handleSelectPlace(selectedPlace) {
-    setUserPlaces((prevPickedPlaces) => {
-      if (!prevPickedPlaces) {
-        prevPickedPlaces = [];
-      }
-      if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
-        return prevPickedPlaces;
-      }
-      return [selectedPlace, ...prevPickedPlaces];
-    });
+  async function handleSelectPlace(selectedPlace) {
+    if (userPlaces.some(p => p.id === selectedPlace.id)) {
+      return;
+    }
+
+    try {
+      await updateUserPlaces([selectedPlace, ...userPlaces]);
+      setUserPlaces((prevPickedPlaces) => {
+        return [selectedPlace, ...prevPickedPlaces];
+      });
+    } catch (e) {
+      console.error(e);
+      throw e; // todo do something better than just rethrowing the error
+    }
   }
 
   const handleRemovePlace = useCallback(async function handleRemovePlace() {
