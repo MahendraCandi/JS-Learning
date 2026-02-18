@@ -15,7 +15,12 @@ function App() {
   const [errorOperation, setErrorOperation] = useState(null);
 
   useEffect(() => {
-    fetchUserPlaces().then(places => setUserPlaces(places));
+    fetchUserPlaces()
+      .then(places => setUserPlaces(places))
+      .catch((error) => {
+        console.error(error);
+        setErrorOperation('Failed to load user places.')
+      });
   }, []);
 
   function handleStartRemovePlace(place) {
@@ -39,7 +44,7 @@ function App() {
       });
     } catch (e) {
       console.error(e);
-      setErrorOperation(e.message || 'Failed to update user places.');
+      setErrorOperation('Failed to add user places.');
     }
   }
 
