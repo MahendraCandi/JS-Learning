@@ -9,7 +9,6 @@ export default function AvailablePlaces({ onSelectPlace }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchPlaces = async () => {
       try {

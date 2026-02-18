@@ -7,25 +7,14 @@ import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
 import {fetchUserPlaces, updateUserPlaces} from "./fetch-utils.jsx";
 import Error from "./components/Error.jsx";
+import {useFetch} from "./hooks/use-fetch.jsx";
 
 function App() {
   const selectedPlace = useRef();
-  const [userPlaces, setUserPlaces] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorOperation, setErrorOperation] = useState(null);
 
-  useEffect(() => {
-    async function fetchSelectedPlaces() {
-      try {
-        const places = await fetchUserPlaces();
-        setUserPlaces(places);
-      } catch (e) {
-        console.error(e);
-        setErrorOperation('Failed to load user places.');
-      }
-    }
-    fetchSelectedPlaces();
-  }, []);
+  const {data: userPlaces, setData: setUserPlaces, isLoading, error} = useFetch([], fetchUserPlaces);
 
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
@@ -97,6 +86,8 @@ function App() {
           fallbackText="Select the places you would like to visit below."
           places={userPlaces}
           onSelectPlace={handleStartRemovePlace}
+          isLoading={isLoading}
+          error={error}
         />
 
         <AvailablePlaces onSelectPlace={handleSelectPlace} />
