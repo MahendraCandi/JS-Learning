@@ -7,8 +7,8 @@ export function useFetch(initialData, fetchFunction) {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         setData(await fetchFunction());
         setIsLoading(false);
       } catch (e) {
@@ -17,7 +17,7 @@ export function useFetch(initialData, fetchFunction) {
     }
 
     fetchData();
-  }, []);
+  }, [fetchFunction]);
 
   return {data, setData, isLoading, error};
 }

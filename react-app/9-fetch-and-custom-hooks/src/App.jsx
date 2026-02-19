@@ -87,6 +87,7 @@ function App() {
           places={userPlaces}
           onSelectPlace={handleStartRemovePlace}
           isLoading={isLoading}
+          loadingText="Loading selected places..."
           error={error}
         />
 
