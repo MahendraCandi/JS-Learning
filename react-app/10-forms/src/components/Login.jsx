@@ -10,13 +10,19 @@
 import {useState} from "react";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [data, setData] = useState({});
 
   const submitHandler = (event) => {
     event.preventDefault();
     console.log("Submitted!");
-    console.log(email, password);
+    console.log(data);
+  }
+
+  const changeHandler = (event) => {
+    setData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value
+    }));
   }
 
   return (
@@ -26,14 +32,12 @@ export default function Login() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email"
-                 onChange={(event) => setEmail(event.target.value)}/>
+          <input id="email" type="email" name="email" onChange={changeHandler}/>
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password"
-                 onChange={(event) => setPassword(event.target.value)}/>
+          <input id="password" type="password" name="password" onChange={changeHandler}/>
         </div>
       </div>
 
