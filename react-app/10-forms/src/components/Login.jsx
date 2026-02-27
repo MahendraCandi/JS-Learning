@@ -7,10 +7,16 @@
 // to solve this problem we can:
 // 1. change the type into button, because the default type is submit
 // 2. add onSubmit attribute in tag form and pass event attribute to prevent default behaviour
+import {useState} from "react";
+
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const submitHandler = (event) => {
     event.preventDefault();
     console.log("Submitted!");
+    console.log(email, password);
   }
 
   return (
@@ -20,12 +26,14 @@ export default function Login() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email" />
+          <input id="email" type="email" name="email"
+                 onChange={(event) => setEmail(event.target.value)}/>
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password" />
+          <input id="password" type="password" name="password"
+                 onChange={(event) => setPassword(event.target.value)}/>
         </div>
       </div>
 
