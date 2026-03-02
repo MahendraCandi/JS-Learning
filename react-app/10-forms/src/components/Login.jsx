@@ -9,56 +9,31 @@
 import {Input} from "./Input.jsx";
 import {useState} from "react";
 import {hasMinLength, isEmail, isNotEmpty} from "../util/validation.js";
+import {useForm} from "../hooks/use-form.jsx";
 
 export default function Login() {
-  const [formData, setFormData] = useState({
-    email: {
-      value: '',
-      isValid: false,
-      validator: (value) => isNotEmpty(value) && isEmail(value)
+  const {form, formData} = useForm(
+    {
+      email: '',
+      password: '',
     },
-    password: {
-      value: '',
-      isValid: false,
-      validator: (value) => isNotEmpty(value) && hasMinLength(value, 5)
-    }
-  });
+    {
+      email: (value) => isNotEmpty(value) && isEmail(value),
+      password: (value) => isNotEmpty(value) && hasMinLength(value, 5),
+    });
   const [isFormValid, setIsFormValid] = useState(null);
-
-  const handleChange = (identifier, value) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [identifier]: {
-        ...prevState[identifier],
-        value
-      }
-    }));
-  }
 
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const isValid = Object.values(formData).every(field => field.isValid);
-    if (!isValid) {
+    if (!form.validateAll()) {
       console.log("Form is not valid!");
       setIsFormValid(false);
       return;
     }
 
     console.log("Submitted!");
-    console.log(formData.email.value, formData.password.value);
-  }
-
-  const validateValue = (identifier, value) => {
-    setFormData(
-      (prevState) => ({
-        ...prevState,
-        [identifier]: {
-          ...prevState[identifier],
-          isValid : prevState[identifier].validator(value)
-        }
-      })
-    )
+    console.log(form.getValue());
   }
 
   return (
@@ -68,16 +43,16 @@ export default function Login() {
       <div className="control-row">
         <Input identifier="email"
                label="Email"
-               handleChange={handleChange}
-               handleInputBlur={validateValue}
+               handleChange={form.handleChange}
+               handleInputBlur={form.validateInput}
                isValid={formData.email.isValid}
                errorMessage={"Please enter a valid email"}
               value={formData.email.value}
         />
         <Input identifier="password"
                label="Password"
-               handleChange={handleChange}
-               handleInputBlur={validateValue}
+               handleChange={form.handleChange}
+               handleInputBlur={form.validateInput}
                isValid={formData.password.isValid}
                errorMessage={"Please enter a valid password"}
                type="password"
