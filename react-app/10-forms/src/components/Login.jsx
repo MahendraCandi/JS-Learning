@@ -8,18 +8,19 @@
 // 2. add onSubmit attribute in tag form and pass event attribute to prevent default behaviour
 import {Input} from "./Input.jsx";
 import {useState} from "react";
+import {hasMinLength, isEmail, isNotEmpty} from "../util/validation.js";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: {
       value: '',
       isValid: false,
-      validator: (value) => value.length > 0 && value.includes('@')
+      validator: (value) => isNotEmpty(value) && isEmail(value)
     },
     password: {
       value: '',
       isValid: false,
-      validator: (value) => value.length > 0
+      validator: (value) => isNotEmpty(value) && hasMinLength(value, 5)
     }
   });
   const [isFormValid, setIsFormValid] = useState(null);
