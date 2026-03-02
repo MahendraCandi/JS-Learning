@@ -14,18 +14,22 @@ import {useState} from "react";
  * @param validator
  */
 export function useForm(initialValues, validator) {
-  const initiateForm = Object.fromEntries(
+  const [formData, setFormData] = useState(Object.fromEntries(
     Object.entries(initialValues)
       .map(([key, value]) =>
         [key, {
           value: value,
-          isValid: false,
-          validator: validator?.[key],
         }]
       )
-  );
+  ));
 
-  const [formData, setFormData] = useState(initiateForm);
+  const [errorMessages, setErrorMessages] = useState(
+    Object.fromEntries(
+      Object.entries(initialValues)
+        .map(([key]) => [key, []])
+    )
+  );
+  const [validators, setValidators] = useState(validator);
 
   const handleChange = (identifier, value) => {
     setFormData((prevState) => ({
@@ -37,32 +41,42 @@ export function useForm(initialValues, validator) {
     }));
   }
 
+  const clearErrorMessages = (identifier) => {
+    // clear error messages for a specific identifier
+    setErrorMessages(prevState => ({
+      ...prevState,
+      [identifier]: []
+    }));
+  }
+
   const validateInput = (identifier, value) => {
-    setFormData(
-      (prevState) => (
-        {
-          ...prevState,
-          [identifier]: {
-            ...prevState[identifier],
-            isValid: prevState[identifier].validator(value)
-          }
-        }
-      )
-    )
+    const {isValid, message} = validators[identifier](value);
+    if (isValid) {
+      clearErrorMessages(identifier);
+    } else {
+      setErrorMessages(prevState => ({
+        ...prevState,
+        [identifier]:
+          Array.from(new Set([...prevState[identifier], message])),
+      }));
+    }
+
+    return isValid;
   }
 
-  const validateAll = () => Object.values(formData).every(
-    (value) => value.validator(value.value));
+  const validateAllInput = () => {
+    return Object.keys(validators).map((key) => {
+      const value = formData[key].value;
+      return validateInput(key, value);
+    }).every(value => value === true);
+  };
 
-  const getValue = () => {
-    return Object.fromEntries(
-      Object.entries(formData).map(([key, value]) => [key, value.value])
-    );
-  }
+  const anyError = Object.values(errorMessages)
+    .every(values => values.length > 0);
 
   const form = {
-    handleChange, validateInput, validateAll, getValue
+    handleChange, validateInput, validateAllInput, anyError, clearErrorMessages
   }
 
-  return {form, formData};
+  return {form, formData, errorMessages};
 }

@@ -7,33 +7,29 @@
 // 1. change the type into button, because the default type is submit
 // 2. add onSubmit attribute in tag form and pass event attribute to prevent default behaviour
 import {Input} from "./Input.jsx";
-import {useState} from "react";
-import {hasMinLength, isEmail, isNotEmpty} from "../util/validation.js";
+import {isEmail, isNotEmpty} from "../util/validation.js";
 import {useForm} from "../hooks/use-form.jsx";
 
 export default function Login() {
-  const {form, formData} = useForm(
+  const {form, formData, errorMessages} = useForm(
     {
       email: '',
       password: '',
     },
     {
-      email: (value) => isNotEmpty(value) && isEmail(value),
-      password: (value) => isNotEmpty(value) && hasMinLength(value, 5),
+      email: (value) => isEmail(value),
+      password: (value) => isNotEmpty(value),
     });
-  const [isFormValid, setIsFormValid] = useState(null);
 
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (!form.validateAll()) {
+    if (!form.validateAllInput()) {
       console.log("Form is not valid!");
-      setIsFormValid(false);
-      return;
+      return
     }
 
     console.log("Submitted!");
-    console.log(form.getValue());
   }
 
   return (
@@ -45,22 +41,22 @@ export default function Login() {
                label="Email"
                handleChange={form.handleChange}
                handleInputBlur={form.validateInput}
-               isValid={formData.email.isValid}
-               errorMessage={"Please enter a valid email"}
-              value={formData.email.value}
+               errorMessages={errorMessages}
+               clearErrorMessages={form.clearErrorMessages}
+               value={formData.email.value}
         />
         <Input identifier="password"
                label="Password"
                handleChange={form.handleChange}
                handleInputBlur={form.validateInput}
-               isValid={formData.password.isValid}
-               errorMessage={"Please enter a valid password"}
+               errorMessages={errorMessages}
+               clearErrorMessages={form.clearErrorMessages}
                type="password"
                value={formData.password.value}
         />
       </div>
       <div className="control-error">
-        {isFormValid !== null && !isFormValid && <p>Form not valid!</p>}
+        {form.anyError && <p>Form not valid!</p>}
       </div>
       <p className="form-actions">
         <button className="button button-flat">Reset</button>

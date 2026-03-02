@@ -1,8 +1,5 @@
-import {useState} from "react";
-
-export function Input({identifier, label, handleChange, handleInputBlur, isValid, errorMessage, ...props}) {
-  const [isEdit, setIsEdit] = useState(false);
-  const [isTouch, setIsTouch] = useState(false)
+export function Input({identifier, label, handleChange, handleInputBlur, clearErrorMessages, errorMessages, ...props}) {
+  console.log(errorMessages, "input");
   return (
     <div className="control no-margin">
       <label htmlFor={identifier}>{label}</label>
@@ -11,17 +8,16 @@ export function Input({identifier, label, handleChange, handleInputBlur, isValid
              onChange={(event) => handleChange(identifier, event.target.value)}
              onBlur={event => {
                handleInputBlur(identifier, event.target.value);
-               setIsEdit(false);
              }}
              onFocus={() => {
-               setIsEdit(true);
-               setIsTouch(true);
+               clearErrorMessages(identifier);
              }}
              {...props}
       />
       <div className={"control-error"}>
         {
-          isTouch && !isEdit && !isValid && <p>{errorMessage}</p>
+          errorMessages[identifier].map(
+            (message, index) => <p key={index}>{message}</p>)
         }
       </div>
     </div>

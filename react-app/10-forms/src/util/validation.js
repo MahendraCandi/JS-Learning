@@ -1,9 +1,11 @@
 export function isEmail(value) {
-  return value.includes('@');
+  const isValid = value.includes('@');
+  return {isValid, message: isValid ? undefined : 'Please enter a valid email address'};
 }
 
 export function isNotEmpty(value) {
-  return value.trim() !== '';
+  const isValid = value.trim() !== '';
+  return {isValid, message: isValid ? '' : 'Cannot be empty'};
 }
 
 export function hasMinLength(value, minLength) {
