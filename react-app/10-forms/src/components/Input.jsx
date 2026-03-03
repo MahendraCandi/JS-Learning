@@ -1,5 +1,4 @@
 export function Input({identifier, label, handleChange, handleInputBlur, clearErrorMessages, errorMessages, ...props}) {
-  console.log(errorMessages, "input");
   return (
     <div className="control no-margin">
       <label htmlFor={identifier}>{label}</label>
@@ -17,7 +16,7 @@ export function Input({identifier, label, handleChange, handleInputBlur, clearEr
       <div className={"control-error"}>
         {
           errorMessages[identifier].map(
-            (message, index) => <p key={index}>{message}</p>)
+            (message) => <p key={message}>{message}</p>)
         }
       </div>
     </div>

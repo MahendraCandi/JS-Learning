@@ -50,14 +50,14 @@ export function useForm(initialValues, validator) {
   }
 
   const validateInput = (identifier, value) => {
-    const {isValid, message} = validators[identifier](value);
+    const {isValid, messages} = validators[identifier](value);
     if (isValid) {
       clearErrorMessages(identifier);
     } else {
       setErrorMessages(prevState => ({
         ...prevState,
         [identifier]:
-          Array.from(new Set([...prevState[identifier], message])),
+          Array.from(new Set([...prevState[identifier], ...messages])),
       }));
     }
 

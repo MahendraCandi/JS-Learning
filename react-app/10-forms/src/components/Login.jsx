@@ -7,7 +7,7 @@
 // 1. change the type into button, because the default type is submit
 // 2. add onSubmit attribute in tag form and pass event attribute to prevent default behaviour
 import {Input} from "./Input.jsx";
-import {isEmail, isNotEmpty} from "../util/validation.js";
+import {hasMinLength, isEmail, isNotEmpty, validators} from "../util/validation.js";
 import {useForm} from "../hooks/use-form.jsx";
 
 export default function Login() {
@@ -17,8 +17,8 @@ export default function Login() {
       password: '',
     },
     {
-      email: (value) => isEmail(value),
-      password: (value) => isNotEmpty(value),
+      email: validators(isNotEmpty, isEmail),
+      password: validators(isNotEmpty, (v) => hasMinLength(v, 6)),
     });
 
   const submitHandler = (event) => {
@@ -55,10 +55,10 @@ export default function Login() {
                value={formData.password.value}
         />
       </div>
-      <div className="control-error">
-        {form.anyError && <p>Form not valid!</p>}
-      </div>
       <p className="form-actions">
+        <div className="control-error">
+          {form.anyError && "Form not valid!"}
+        </div>
         <button className="button button-flat">Reset</button>
         <button className="button">Login</button>
       </p>
