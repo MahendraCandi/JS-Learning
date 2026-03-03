@@ -1,6 +1,68 @@
+import {hasMinLength, isEmail, isEqualToOtherValue, isNotEmpty} from "../util/validation.js";
+import {useActionState} from "react";
+
 export default function Signup() {
+
+  const signupAction = (
+    previousState, // the previous state, this param exist because signupAction is passed into useActionState
+    formData // this parameter provided by action attribute in form tag
+  ) => {
+    console.log(formData);
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirm-password");
+    const firstName = formData.get("first-name");
+    const lastName = formData.get("last-name");
+    const role = formData.get("role");
+    const acquisition = formData.getAll("acquisition");
+    const terms = formData.get("terms");
+
+    let errors = [];
+    if (!isNotEmpty(email) || isEmail(email)) {
+      errors.push("Email is not valid");
+    }
+
+    if (!isNotEmpty(password) || hasMinLength(password, 6)) {
+      errors.push("Password is not valid");
+    }
+
+    if (!isNotEmpty(confirmPassword) || !isEqualToOtherValue(confirmPassword, password)) {
+      errors.push("Confirm password is not valid");
+    }
+
+    if (!isNotEmpty(firstName) || !isNotEmpty(lastName)) {
+      errors.push("First name and last name are required");
+    }
+
+    if (isNotEmpty(role)) {
+      errors.push("Role is not valid");
+    }
+
+    if (acquisition.length === 0) {
+      errors.push("You must select at least one acquisition method");
+    }
+
+    if (!terms) {
+      errors.push("You must agree to the terms and conditions");
+    }
+
+    if (errors.length > 0) {
+      return {errors};
+    }
+
+    return {errors : null}
+  }
+
+  const [
+    formState, // the return of the action function
+    formAction,  // the action function that has been enhanced with by React
+    pending// a boolean to indicate if a form already submit or not. good for async process
+  ] = useActionState(signupAction, {errors: null});
+
   return (
-    <form>
+    // action is ReactJS special attribute to make form easier
+    // function will have parameter "formData" which is a FormData object
+    <form action={formAction}>
       <h2>Welcome on board!</h2>
       <p>We just need a little bit of data from you to get you started 🚀</p>
 
@@ -84,6 +146,15 @@ export default function Signup() {
           agree to the terms and conditions
         </label>
       </div>
+
+      {
+        formState.errors &&
+        <ul className="error">
+          {
+            formState.errors.map((error) => (<p key={error} className="error">{error}</p>))
+          }
+        </ul>
+      }
 
       <p className="form-actions">
         <button type="reset" className="button button-flat">
