@@ -43,7 +43,7 @@ export default function Login() {
                handleInputBlur={form.validateInput}
                errorMessages={errorMessages}
                clearErrorMessages={form.clearErrorMessages}
-               value={formData.email.value}
+               value={formData.email}
         />
         <Input identifier="password"
                label="Password"
@@ -52,13 +52,13 @@ export default function Login() {
                errorMessages={errorMessages}
                clearErrorMessages={form.clearErrorMessages}
                type="password"
-               value={formData.password.value}
+               value={formData.password}
         />
       </div>
       <p className="form-actions">
-        <div className="control-error">
+        <span className="control-error">
           {form.anyError && "Form not valid!"}
-        </div>
+        </span>
         <button className="button button-flat">Reset</button>
         <button className="button">Login</button>
       </p>

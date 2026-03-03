@@ -15,7 +15,7 @@ export function Input({identifier, label, handleChange, handleInputBlur, clearEr
       />
       <div className={"control-error"}>
         {
-          errorMessages[identifier].map(
+          errorMessages[identifier]?.map(
             (message) => <p key={message}>{message}</p>)
         }
       </div>

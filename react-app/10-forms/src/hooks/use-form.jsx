@@ -14,30 +14,19 @@ import {useState} from "react";
  * @param validator
  */
 export function useForm(initialValues, validator) {
-  const [formData, setFormData] = useState(Object.fromEntries(
-    Object.entries(initialValues)
-      .map(([key, value]) =>
-        [key, {
-          value: value,
-        }]
-      )
-  ));
-
+  const [formData, setFormData] = useState(initialValues);
+  const [validators, setValidators] = useState(validator);
   const [errorMessages, setErrorMessages] = useState(
     Object.fromEntries(
       Object.entries(initialValues)
         .map(([key]) => [key, []])
     )
   );
-  const [validators, setValidators] = useState(validator);
 
   const handleChange = (identifier, value) => {
     setFormData((prevState) => ({
       ...prevState,
-      [identifier]: {
-        ...prevState[identifier],
-        value
-      }
+      [identifier]: value
     }));
   }
 
@@ -66,7 +55,7 @@ export function useForm(initialValues, validator) {
 
   const validateAllInput = () => {
     return Object.keys(validators).map((key) => {
-      const value = formData[key].value;
+      const value = formData[key];
       return validateInput(key, value);
     }).every(value => value === true);
   };
