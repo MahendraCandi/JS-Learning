@@ -1,67 +1,67 @@
 import {hasMinLength, isEmail, isEmpty, isEqualToOtherValue} from "../util/validation.js";
 import {useActionState} from "react";
 
-export default function Signup() {
-
-  const signupAction = (
+const signupAction = (
     previousState, // the previous state, this param exist because signupAction is passed into useActionState
     formData // this parameter provided by action attribute in form tag
-  ) => {
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const confirmPassword = formData.get("confirm-password");
-    const firstName = formData.get("first-name");
-    const lastName = formData.get("last-name");
-    const role = formData.get("role");
-    const acquisition = formData.getAll("acquisition");
-    const terms = formData.get("terms");
+) => {
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const confirmPassword = formData.get("confirm-password");
+  const firstName = formData.get("first-name");
+  const lastName = formData.get("last-name");
+  const role = formData.get("role");
+  const acquisition = formData.getAll("acquisition");
+  const terms = formData.get("terms");
 
-    let errors = [];
-    if (isEmpty(email) || !isEmail(email)) {
-      errors.push("Email is not valid");
-    }
-
-    if (isEmpty(password) || !hasMinLength(password, 6)) {
-      errors.push("Password is not valid");
-    }
-
-    if (isEmpty(confirmPassword) || !isEqualToOtherValue(confirmPassword, password)) {
-      errors.push("Confirm password is not valid");
-    }
-
-    if (isEmpty(firstName) || isEmpty(lastName)) {
-      errors.push("First name and last name are required");
-    }
-
-    if (isEmpty(role)) {
-      errors.push("Role is not valid");
-    }
-
-    if (acquisition.length === 0) {
-      errors.push("You must select at least one acquisition method");
-    }
-
-    if (!terms) {
-      errors.push("You must agree to the terms and conditions");
-    }
-
-    if (errors.length > 0) {
-      return {
-        errors,
-
-        // the default behaviour, form action will always clear all input data after submitted.
-        // thus, we have to hold the inputted by creating an object that hold all the inputs.
-        enteredValue: {
-          email, password, confirmPassword, firstName, lastName, role, acquisition, terms
-        }
-      };
-    }
-
-    // clear entered value if success
-    return {
-      errors: null,
-    }
+  let errors = [];
+  if (isEmpty(email) || !isEmail(email)) {
+    errors.push("Email is not valid");
   }
+
+  if (isEmpty(password) || !hasMinLength(password, 6)) {
+    errors.push("Password is not valid");
+  }
+
+  if (isEmpty(confirmPassword) || !isEqualToOtherValue(confirmPassword, password)) {
+    errors.push("Confirm password is not valid");
+  }
+
+  if (isEmpty(firstName) || isEmpty(lastName)) {
+    errors.push("First name and last name are required");
+  }
+
+  if (isEmpty(role)) {
+    errors.push("Role is not valid");
+  }
+
+  if (acquisition.length === 0) {
+    errors.push("You must select at least one acquisition method");
+  }
+
+  if (!terms) {
+    errors.push("You must agree to the terms and conditions");
+  }
+
+  if (errors.length > 0) {
+    return {
+      errors,
+
+      // the default behaviour, form action will always clear all input data after submitted.
+      // thus, we have to hold the inputted by creating an object that hold all the inputs.
+      enteredValue: {
+        email, password, confirmPassword, firstName, lastName, role, acquisition, terms
+      }
+    };
+  }
+
+  // clear entered value if success
+  return {
+    errors: null,
+  }
+}
+
+export default function Signup() {
 
   const [
     formState, // the return of the action function
