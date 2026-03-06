@@ -38,7 +38,8 @@ export function NewOpinion() {
 
   const [
     formState,
-    formAction
+    formAction,
+    pending
   ] = useActionState(opinionAction, {errors: null});
 
   return (
@@ -71,7 +72,7 @@ export function NewOpinion() {
         }
 
         <p className="actions">
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={pending}>{pending ? "Submitting..." : "Submit"}</button>
         </p>
       </form>
     </div>
