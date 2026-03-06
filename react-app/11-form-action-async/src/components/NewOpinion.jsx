@@ -1,38 +1,40 @@
-import {useActionState} from "react";
+import {use, useActionState} from "react";
 import {isEmpty} from "../util/validation.js";
-
-function opinionAction(previousState, formState,) {
-
-  const userName = formState.get("userName");
-  const title = formState.get("title");
-  const body = formState.get("body");
-
-  console.log(userName, title, body);
-
-  let errors = [];
-  if (isEmpty(userName)) {
-    errors.push("User name is required!");
-  }
-
-  if (isEmpty(title)) {
-    errors.push("Title is required!");
-  }
-
-  if (isEmpty(body)) {
-    errors.push("Body is required!");
-  }
-
-  if (errors.length > 0) {
-    return {errors, enteredValue: {userName, title, body}};
-  }
-
-  // todo create submit
-  return {
-    errors: null,
-  };
-}
+import {OpinionsContext} from "../store/opinions-context.jsx";
 
 export function NewOpinion() {
+  const {addOpinion} = use(OpinionsContext);
+
+  async function opinionAction(previousState, formState,) {
+    const userName = formState.get("userName");
+    const title = formState.get("title");
+    const body = formState.get("body");
+
+    console.log(userName, title, body);
+
+    let errors = [];
+    if (isEmpty(userName)) {
+      errors.push("User name is required!");
+    }
+
+    if (isEmpty(title)) {
+      errors.push("Title is required!");
+    }
+
+    if (isEmpty(body)) {
+      errors.push("Body is required!");
+    }
+
+    if (errors.length > 0) {
+      return {errors, enteredValue: {userName, title, body}};
+    }
+
+    await addOpinion({userName, title, body});
+
+    return {
+      errors: null,
+    };
+  }
 
   const [
     formState,
