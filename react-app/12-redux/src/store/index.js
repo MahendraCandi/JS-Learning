@@ -1,7 +1,7 @@
 // In real project, we should use redux toolkit
 // For learning purpose, it safe to use the legacy version
 import { legacy_createStore as createStore } from 'redux';
-import {createSlice} from "@reduxjs/toolkit";
+import {configureStore, createSlice} from "@reduxjs/toolkit";
 
 // Please notice that the default value defined in the parameter.
 // Per this learn, there is no a way to define the default value through the function caller.
@@ -39,10 +39,29 @@ const reducer = (state = initiateState, action) => {
   }
 };
 
+// Store is the main object that used by Redux to operate the state.
+// Pass the reducer function to createStore.
+const store = createStore(reducer);
+
+// Subscribe is aways used to listen the state change.
+// const subscriber = () => {
+//     console.log(store.getState());
+// }
+// store.subscribe(subscriber);
+
+// Dispatch is away to give command to change the state.
+// Dispatch will pass the action object to reducer function.
+// store.dispatch({type: 'increment'});
+// store.dispatch({type: 'decrement'});
+// store.dispatch({type: 'decrement'});
+// store.dispatch({type: 'decrement'});
+
+export default store;
+
 // The known problem could be solved by using redux toolkit
 // The createSlice will create a slice of state.
 // We can create multiple slice, and in behind redux toolkit will manage the state inside the store.
-createSlice({
+const counterSlice = createSlice({
   name: 'counter', // the name of slice of state
   initialState: initiateState, // initial value
   reducers: {
@@ -68,21 +87,13 @@ createSlice({
   }
 });
 
-// Store is the main object that used by Redux to operate the state.
-// Pass the reducer function to createStore.
-const store = createStore(reducer);
+// all reducer need to be register to the store.
+// redux toolkit will do this by using configureStore.
+configureStore({
+  reducer: counterSlice.reducer // register all reducers that counterSlice had
 
-// Subscribe is aways used to listen the state change.
-// const subscriber = () => {
-//     console.log(store.getState());
-// }
-// store.subscribe(subscriber);
-
-// Dispatch is away to give command to change the state.
-// Dispatch will pass the action object to reducer function.
-// store.dispatch({type: 'increment'});
-// store.dispatch({type: 'decrement'});
-// store.dispatch({type: 'decrement'});
-// store.dispatch({type: 'decrement'});
-
-export default store;
+  // if there are multiple slice, we can register them like this:
+  // reducer: {
+  //   counter: counterSlice.reducer
+  // }
+});
