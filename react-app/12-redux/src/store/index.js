@@ -1,6 +1,6 @@
 // In real project, we should use redux toolkit
 // For learning purpose, it safe to use the legacy version
-import { legacy_createStore as createStore } from 'redux';
+// import { legacy_createStore as createStore } from 'redux';
 import {configureStore, createSlice} from "@reduxjs/toolkit";
 
 // Please notice that the default value defined in the parameter.
@@ -8,14 +8,14 @@ import {configureStore, createSlice} from "@reduxjs/toolkit";
 // State is like usual state in useState, it could save object and value.
 // action is like flag of operation that changes the state.
 const initiateState = { count: 0, showCounter: true };
+/**
 const reducer = (state = initiateState, action) => {
   console.log('action', action);
   console.log('state', state);
   switch (action.type) {
-    // fixme known problem: what happen if there are will be a lot of actions?
-    case 'increment':// fixme known problem: better use somehing like enum or constant in case of typos in larger files
+    case 'increment':
       return {
-        ...state, // fixme known problem: best practice to override the previous state then use same object, because Javascript behind the screen use object reference
+        ...state,
         count: state.count + 1
       };
     case 'decrement':
@@ -38,10 +38,13 @@ const reducer = (state = initiateState, action) => {
       return state;
   }
 };
+*/
 
 // Store is the main object that used by Redux to operate the state.
 // Pass the reducer function to createStore.
+/*
 const store = createStore(reducer);
+*/
 
 // Subscribe is aways used to listen the state change.
 // const subscriber = () => {
@@ -56,7 +59,9 @@ const store = createStore(reducer);
 // store.dispatch({type: 'decrement'});
 // store.dispatch({type: 'decrement'});
 
+/*
 export default store;
+*/
 
 // The known problem could be solved by using redux toolkit
 // The createSlice will create a slice of state.
@@ -74,22 +79,27 @@ const counterSlice = createSlice({
       // redux toolkit guarantee that the state is immutable. So we don't have to override the previous state.
       // This solved problem the needs to always return a new state.
       state.count += 1;
+      console.log('state', state.count);
     },
     decrement: (state) => {
       state.count -= 1;
+      console.log('state', state.count);
     },
-    increase: (state, action) => {
-      state.count += action.increaseValue;
+    increase: (state, payload) => {
+      state.count += payload.payload;
+      console.log('payload', payload);
+      console.log('state', state.count);
     },
     toggle: (state) => {
       state.showCounter = !state.showCounter;
+      console.log('state', state.count);
     }
   }
 });
 
 // all reducer need to be register to the store.
 // redux toolkit will do this by using configureStore.
-configureStore({
+export const store = configureStore({
   reducer: counterSlice.reducer // register all reducers that counterSlice had
 
   // if there are multiple slice, we can register them like this:
@@ -97,3 +107,5 @@ configureStore({
   //   counter: counterSlice.reducer
   // }
 });
+
+export const counterActions = counterSlice.actions;
