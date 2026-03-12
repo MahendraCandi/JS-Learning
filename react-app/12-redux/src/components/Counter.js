@@ -4,8 +4,8 @@ import {counterActions} from "../store/counter-slice";
 
 const Counter = () => {
   // useSelector to get the state from the store.
-  const counter = useSelector(state => state.count);
-  const isShowCounter = useSelector(state => state.showCounter);
+  const counter = useSelector(state => state.counter.count);
+  const isShowCounter = useSelector(state => state.counter.showCounter);
 
   // useDispatch to get dispatch function that used to dispatch an action.
   const dispatch = useDispatch();
