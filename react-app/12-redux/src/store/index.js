@@ -3,6 +3,7 @@
 // import { legacy_createStore as createStore } from 'redux';
 import {configureStore} from "@reduxjs/toolkit";
 import {counterSlice} from "./counter-slice";
+import {authSlice} from "./authentication-slice";
 
 // Please notice that the default value defined in the parameter.
 // Per this learn, there is no a way to define the default value through the function caller.
@@ -67,10 +68,11 @@ export default store;
 // all reducer need to be register to the store.
 // redux toolkit will do this by using configureStore.
 export const store = configureStore({
-  reducer: counterSlice.reducer // register all reducers that counterSlice had
+  // reducer: counterSlice.reducer // register all reducers that counterSlice had
 
   // if there are multiple slice, we can register them like this:
-  // reducer: {
-  //   counter: counterSlice.reducer
-  // }
+  reducer: {
+    counter: counterSlice.reducer,
+    auth: authSlice.reducer
+  }
 });
