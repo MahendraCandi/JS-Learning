@@ -6,18 +6,35 @@ import { legacy_createStore as createStore } from 'redux';
 // Per this learn, there is no a way to define the default value through the function caller.
 // State is like usual state in useState, it could save object and value.
 // action is like flag of operation that changes the state.
-const reducer = (state = { count: 0 }, action) => {
+const initiateState = { count: 0, showCounter: true };
+const reducer = (state = initiateState, action) => {
   console.log('action', action);
   console.log('state', state);
-  if (action.type === 'increment') {
-    return { count: state.count + 1 };
-  } else if (action.type === 'decrement') {
-    return { count: state.count - 1 };
-  } else if (action.type === 'increase') {
-    return { count: state.count + action.increaseValue };
-  }
-  else {
-    return state;
+  switch (action.type) {
+
+    case 'increment':
+      return {
+        ...state,
+        count: state.count + 1
+      };
+    case 'decrement':
+      return {
+        ...state,
+        count: state.count - 1
+      };
+    case 'increase':
+      return {
+        ...state,
+        count: state.count + action.increaseValue
+      };
+    case 'toggle':
+      return {
+        ...state,
+        showCounter: !state.showCounter
+      };
+
+    default:
+      return state;
   }
 };
 
