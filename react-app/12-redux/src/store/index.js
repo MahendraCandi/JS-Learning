@@ -13,7 +13,10 @@ const reducer = (state = { count: 0 }, action) => {
     return { count: state.count + 1 };
   } else if (action.type === 'decrement') {
     return { count: state.count - 1 };
-  } else {
+  } else if (action.type === 'increase') {
+    return { count: state.count + action.increaseValue };
+  }
+  else {
     return state;
   }
 };
