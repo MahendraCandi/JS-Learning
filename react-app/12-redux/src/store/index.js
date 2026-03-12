@@ -1,14 +1,15 @@
 // In real project, we should use redux toolkit
 // For learning purpose, it safe to use the legacy version
 // import { legacy_createStore as createStore } from 'redux';
-import {configureStore, createSlice} from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
+import {counterSlice} from "./counter-slice";
 
 // Please notice that the default value defined in the parameter.
 // Per this learn, there is no a way to define the default value through the function caller.
 // State is like usual state in useState, it could save object and value.
 // action is like flag of operation that changes the state.
-const initiateState = { count: 0, showCounter: true };
 /**
+const initiateState = { count: 0, showCounter: true };
 const reducer = (state = initiateState, action) => {
   console.log('action', action);
   console.log('state', state);
@@ -63,40 +64,6 @@ const store = createStore(reducer);
 export default store;
 */
 
-// The known problem could be solved by using redux toolkit
-// The createSlice will create a slice of state.
-// We can create multiple slice, and in behind redux toolkit will manage the state inside the store.
-const counterSlice = createSlice({
-  name: 'counter', // the name of slice of state
-  initialState: initiateState, // initial value
-  reducers: {
-    // instead using action type, we can create a function for each type.
-    // This solved problem when the function become larger.
-
-    // by using object, we don't need to worry the typos.
-    // this solved problem using constant.
-    increment: (state) => {
-      // redux toolkit guarantee that the state is immutable. So we don't have to override the previous state.
-      // This solved problem the needs to always return a new state.
-      state.count += 1;
-      console.log('state', state.count);
-    },
-    decrement: (state) => {
-      state.count -= 1;
-      console.log('state', state.count);
-    },
-    increase: (state, payload) => {
-      state.count += payload.payload;
-      console.log('payload', payload);
-      console.log('state', state.count);
-    },
-    toggle: (state) => {
-      state.showCounter = !state.showCounter;
-      console.log('state', state.count);
-    }
-  }
-});
-
 // all reducer need to be register to the store.
 // redux toolkit will do this by using configureStore.
 export const store = configureStore({
@@ -107,5 +74,3 @@ export const store = configureStore({
   //   counter: counterSlice.reducer
   // }
 });
-
-export const counterActions = counterSlice.actions;
