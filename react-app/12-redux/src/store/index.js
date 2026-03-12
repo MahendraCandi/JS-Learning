@@ -11,10 +11,10 @@ const reducer = (state = initiateState, action) => {
   console.log('action', action);
   console.log('state', state);
   switch (action.type) {
-
-    case 'increment':
+    // fixme known problem: what happen if there are will be a lot of actions?
+    case 'increment':// fixme known problem: better use somehing like enum or constant in case of typos in larger files
       return {
-        ...state,
+        ...state, // fixme known problem: best practice to override the previous state then use same object, because Javascript behind the screen use object reference
         count: state.count + 1
       };
     case 'decrement':
