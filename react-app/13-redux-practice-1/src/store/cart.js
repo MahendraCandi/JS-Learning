@@ -11,7 +11,8 @@ import {createSlice, current} from "@reduxjs/toolkit";
  *         price: 0,
  *         description: '',
  *       },
- *       quantity: 0
+ *       quantity: 0,
+ *       total: 0,
  *     }
  *   ]
  * }
@@ -36,27 +37,43 @@ export const cartSlice = createSlice({
   reducers: {
     addProduct: (state, payload) => {
       if (findProductIndexInCart(state.carts, payload.payload.title) < 0) {
-        state.carts.push({product: payload.payload, quantity: 1});
+        state.carts.push({
+          product: payload.payload,
+          quantity: 1,
+          total: payload.payload.price
+        });
         console.log('add', current(state.carts));
       }
     },
     incrementQuantity: (state, payload) => {
       const index = findProductIndexInCart(state.carts, payload.payload.title);
       if (index > -1) {
-        state.carts[index].quantity++;
+        const cartItem = state.carts[index];
+        cartItem.quantity += 1 ;
+        cartItem.total = cartItem.product.price * cartItem.quantity;
         console.log('incrementQuantity', current(state.carts));
       }
     },
     decrementQuantity: (state, payload) => {
       const index = findProductIndexInCart(state.carts, payload.payload.title);
       if (index > -1) {
-        state.carts[index].quantity--;
+        const cartItem = state.carts[index];
+        if (cartItem.quantity > 1) {
+          cartItem.quantity -= 1 ;
+          cartItem.total = cartItem.product.price * cartItem.quantity;
+        } else {
+          // remove product from cart
+          state.carts.splice(index, 1);
+        }
         console.log('decrementQuantity', current(state.carts));
       }
     },
     removeProduct: (state, payload) => {
-      state.carts = state.carts.filter(p => p.product.title !== payload.payload.title);
-      console.log('removeProduct', current(state.carts));
+      const index = findProductIndexInCart(state.carts, payload.payload.title);
+      if (index > -1) {
+        state.carts.splice(index, 1);
+        console.log('removeProduct', current(state.carts));
+      }
     },
   }
 });

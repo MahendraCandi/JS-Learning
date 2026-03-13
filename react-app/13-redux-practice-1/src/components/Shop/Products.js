@@ -13,7 +13,7 @@ const Products = (props) => {
         />
           <ProductItem
               title='Bucket'
-              price={1}
+              price={5.99}
               description='Another product - very nice!'
           />
       </ul>
