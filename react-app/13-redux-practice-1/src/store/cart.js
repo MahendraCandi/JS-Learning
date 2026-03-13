@@ -31,6 +31,8 @@ const findProductIndexInCart = (carts, title) => {
   return carts.findIndex(matchProductPredicate(title));
 }
 
+// todo find solution for submit and fetch data via a backend.
+//  please use this firebase endpoint: https://react-js-learning-a6947-default-rtdb.asia-southeast1.firebasedatabase.app/
 export const cartSlice = createSlice({
   name: 'cart',
   initialState: initialState,
