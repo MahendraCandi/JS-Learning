@@ -6,6 +6,9 @@ import {useEffect} from "react";
 import Notification from "./components/UI/Notification";
 import {uiActions} from "./store/ui-slice";
 
+// Workaround to avoid sending empty data to Firebase whenever the app start.
+let isInitialRun = true;
+
 function App() {
   const dispatch = useDispatch();
   const isOpenCart = useSelector(state => state.uis.openCart);
@@ -15,6 +18,8 @@ function App() {
   // use useEffect to interact with external API, then state the changes to Redux.
   // This approach has a bug which is whenever the app start, useEffect will trigger and will send empty data to Firebase.
   // As a result, the existing data will be overwritten by the empty data.
+  //
+  // This could be fixed by creating a variable outside the component. Please see variable "isInitialRun" in the code.
   useEffect(() => {
     console.log('useEffect - carts changed', carts);
 
@@ -34,6 +39,11 @@ function App() {
       dispatch(uiActions.pushNotification({status: 'success', title: 'Carts sent successfully', message: 'Your carts are saved.'}));
     }
 
+    if (isInitialRun) {
+      isInitialRun = false;
+      return;
+    }
+
     sendCarts().catch(error => {
       dispatch(uiActions.pushNotification({status: 'error', title: 'Error!', message: error.message}));
     });
@@ -42,7 +52,7 @@ function App() {
 
   return (
     <Layout>
-      { notification !== null &&
+      {notification &&
         <Notification status={notification.status}
                       title={notification.title}
                       message={notification.message} />}
