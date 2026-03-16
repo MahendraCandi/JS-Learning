@@ -4,7 +4,7 @@ import Products from './components/Shop/Products';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import Notification from "./components/UI/Notification";
-import {sendCartChanges} from "./store/cart";
+import {fetchCarts, sendCartChanges} from "./store/cart-thunk";
 
 // Workaround to avoid sending empty data to Firebase whenever the app start.
 let isInitialRun = true;
@@ -14,6 +14,11 @@ function App() {
   const isOpenCart = useSelector(state => state.uis.openCart);
   const carts = useSelector(state => state.carts.carts);
   const notification = useSelector(state => state.uis.notification);
+
+  useEffect(() => {
+    console.log('useEffect - app start');
+    dispatch(fetchCarts());
+  }, []);
 
   useEffect(() => {
     console.log('useEffect - carts changed', carts);
