@@ -13,13 +13,15 @@ import {createSlice, current} from "@reduxjs/toolkit";
  *       quantity: 0,
  *       total: 0,
  *     }
- *   ]
+ *   ],
+ *   isChanged: false,
  * }
  * </pre>
  * @type {{carts: *[]}}
  */
 const initialState = {
-  carts: []
+  carts: [],
+  isChanged: false,
 };
 
 const matchProductPredicate = (title) => {
@@ -41,6 +43,7 @@ export const cartSlice = createSlice({
           quantity: 1,
           total: payload.payload.price
         });
+        state.isChanged = true;
         console.log('add', current(state.carts));
       }
     },
@@ -50,6 +53,7 @@ export const cartSlice = createSlice({
         const cartItem = state.carts[index];
         cartItem.quantity += 1 ;
         cartItem.total = cartItem.product.price * cartItem.quantity;
+        state.isChanged = true;
         console.log('incrementQuantity', current(state.carts));
       }
     },
@@ -64,6 +68,7 @@ export const cartSlice = createSlice({
           // remove product from cart
           state.carts.splice(index, 1);
         }
+        state.isChanged = true;
         console.log('decrementQuantity', current(state.carts));
       }
     },

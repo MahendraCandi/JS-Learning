@@ -13,6 +13,7 @@ function App() {
   const dispatch = useDispatch();
   const isOpenCart = useSelector(state => state.uis.openCart);
   const carts = useSelector(state => state.carts.carts);
+  const isCartsChanged = useSelector(state => state.carts.isChanged);
   const notification = useSelector(state => state.uis.notification);
 
   useEffect(() => {
@@ -22,14 +23,18 @@ function App() {
 
   useEffect(() => {
     console.log('useEffect - carts changed', carts);
+    console.log('useEffect - is changed', isCartsChanged);
     if (isInitialRun) {
       isInitialRun = false;
       return;
     }
 
-    // Dispatching Thunk function to send data to Firebase before execute Redux reducer function.
-    dispatch(sendCartChanges(carts));
-  }, [carts, dispatch]);
+    if (isCartsChanged) {
+      // Dispatching Thunk function to send data to Firebase before execute Redux reducer function.
+      dispatch(sendCartChanges(carts));
+    }
+
+  }, [carts, isCartsChanged, dispatch]);
 
   return (
     <Layout>
