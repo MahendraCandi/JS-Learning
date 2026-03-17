@@ -1,2 +1,2 @@
-const ProductPage = () => (<h1>Product Page</h1>);
+const ProductPage = () => (<h1>Products Page</h1>);
 export default ProductPage;
