@@ -7,7 +7,6 @@ const MainNavigation = () => {
       <nav>
         <ul className={classes.list}>
           <li>
-            {/*todo why the link is always active*/}
             <NavLink className={({isActive}) => (isActive ? classes.active : undefined)}
                      to={'/'}
                      end
