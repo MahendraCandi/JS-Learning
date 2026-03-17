@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     // this path and element inside children only works when the path is '/' and under element Root
     children: [
       {
-        path: '/',
+        index: true, // to defines the default child route of this parent path.
         element: <HomePage />,
       },
       {
