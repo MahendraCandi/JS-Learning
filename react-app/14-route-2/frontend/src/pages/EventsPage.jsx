@@ -1,5 +1,4 @@
 import {Link} from "react-router-dom";
-import EventsNavigation from "../components/EventsNavigation";
 
 const DUMMY_EVENTS = [
   {
@@ -20,7 +19,6 @@ const EventsPage = () => {
   return (
     <>
       <h1>Events Page</h1>
-      <EventsNavigation />
       <ul>
         {
           DUMMY_EVENTS.map((e) =>
