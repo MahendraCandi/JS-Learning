@@ -1,6 +1,6 @@
 import EventsList from "../components/EventsList";
 import {useLoaderData} from "react-router-dom";
-import {fetchEvents} from "../events-fetch";
+import {fetchEvents} from "../utils/events-fetch";
 
 const EventsPage = () => {
   // useLoaderData gets data from router 'loader'.
