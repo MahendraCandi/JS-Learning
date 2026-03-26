@@ -17,7 +17,7 @@ const ErrorPages = () => {
         break;
       case 500:
         title = "Internal Server Error - 500";
-        message = "The server encountered an unexpected condition that prevented it from fulfilling the request.";
+        message = exception.errorMessage;
         break;
     }
   }
