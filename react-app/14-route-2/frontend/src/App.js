@@ -28,6 +28,7 @@ import EventDetailPage from "./pages/EventDetailPage";
 import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import RootEventPage from "./pages/RootEventPage";
+import {fetchEvents} from "./events-fetch";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
+            loader: async () => {
+              try {
+                return await fetchEvents();
+              } catch (e) {
+                // todo handle error later
+                return [];
+              }
+            },
           },
           {
             path: ":id",
