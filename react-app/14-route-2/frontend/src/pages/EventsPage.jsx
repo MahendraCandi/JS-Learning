@@ -1,12 +1,13 @@
 import EventsList from "../components/EventsList";
 import {useLoaderData} from "react-router-dom";
 import {fetchEvents} from "../utils/events-fetch";
+import LoaderResponse from "../utils/loader-response";
 
 const EventsPage = () => {
   // useLoaderData gets data from router 'loader'.
-  const availableEvents = useLoaderData();
+  const response = useLoaderData();
   return (
-    <EventsList events={availableEvents}/>
+    <EventsList events={response.data}/>
   )
 }
 
@@ -18,9 +19,9 @@ export default EventsPage;
  */
 export const loader = async () => {
   try {
-    return await fetchEvents();
+    const events = await fetchEvents();
+    return new LoaderResponse(events);
   } catch (e) {
-    // todo handle error later
-    return [];
+    return new LoaderResponse(null, e);
   }
 }
