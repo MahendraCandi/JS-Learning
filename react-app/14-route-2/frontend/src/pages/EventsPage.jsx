@@ -1,31 +1,43 @@
-import {Link} from "react-router-dom";
-
-const DUMMY_EVENTS = [
-  {
-    id: "1",
-    name: "Hotel A",
-  },
-  {
-    id: "2",
-    name: "Hotel B",
-  },
-  {
-    id: "3",
-    name: "Hotel C",
-  }
-]
+import {useEffect, useState} from "react";
+import {fetchEvents} from "../events-fetch";
+import EventsList from "../components/EventsList";
 
 const EventsPage = () => {
+  const [availableEvents, setAvailableEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    const fetchEventsWrapper = async () => {
+      setIsLoading(true);
+      let events;
+      try {
+        events = await fetchEvents();
+      } catch (e) {
+        console.error(e);
+        setError(e);
+      }
+      setAvailableEvents(events);
+      setIsLoading(false);
+    }
+
+    fetchEventsWrapper();
+  }, []);
+
   return (
     <>
-      <h1>Events Page</h1>
-      <ul>
+      <div style={{textAlign: "center"}}>
         {
-          DUMMY_EVENTS.map((e) =>
-            <li key={e.id}><Link to={e.id}>{e.name}</Link></li>
-          )
+          isLoading && <p>Loading...</p>
         }
-      </ul>
+        {
+          error && <p style={{color: "red"}}>{error.message}</p>
+        }
+      </div>
+
+      {
+        !isLoading && !error && availableEvents.length > 0 && <EventsList events={availableEvents}/>
+      }
     </>
   )
 }
