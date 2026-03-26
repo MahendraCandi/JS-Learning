@@ -18,9 +18,20 @@
 export async function fetchEvents() {
     const response = await fetch("http://localhost:8080/events");
     if (!response.ok) {
-        throw new Error("Failed to fetch events");
+        throw new FetchException("Failed to fetch events", response.status);
     }
 
     const json = await response.json();
     return json.events;
+}
+
+export class FetchException extends Error {
+  errorMessage;
+  status;
+
+  constructor(errorMessage, status) {
+    super(errorMessage);
+    this.errorMessage = errorMessage;
+    this.status = status;
+  }
 }

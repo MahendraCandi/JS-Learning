@@ -18,10 +18,6 @@ export default EventsPage;
  * A loader function that fetches events from the backend.
  */
 export const loader = async () => {
-  try {
-    const events = await fetchEvents();
-    return new LoaderResponse(events);
-  } catch (e) {
-    return new LoaderResponse(null, e);
-  }
+  const events = await fetchEvents(); // any error during http fetching will throw FetchException class.
+  return new LoaderResponse(events);
 }
