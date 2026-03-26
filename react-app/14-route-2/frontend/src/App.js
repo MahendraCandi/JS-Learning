@@ -45,6 +45,8 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
+            // loader will wait for the function to return value,
+            // until it ready loader won't render the page.
             loader: eventPageLoader,
           },
           {
