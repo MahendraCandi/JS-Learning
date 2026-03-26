@@ -1,6 +1,7 @@
 import PageContent from "./PageContent";
 import {useRouteError} from "react-router-dom";
 import {FetchException} from "../utils/events-fetch";
+import MainNavigation from "../components/MainNavigation";
 
 const ErrorPages = () => {
   const exception = useRouteError();
@@ -22,7 +23,10 @@ const ErrorPages = () => {
   }
 
   return (
-    <PageContent title={title}><p>{message}</p></PageContent>
+    <>
+      <MainNavigation/>
+      <PageContent title={title}><p>{message}</p></PageContent>
+    </>
   );
 }
 
