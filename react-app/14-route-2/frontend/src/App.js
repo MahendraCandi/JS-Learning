@@ -23,12 +23,11 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RoutePage from "./pages/RoutePage";
 import HomePage from "./pages/HomePage";
-import EventsPage from "./pages/EventsPage";
+import EventsPage, {loader as eventPageLoader} from "./pages/EventsPage";
 import EventDetailPage from "./pages/EventDetailPage";
 import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import RootEventPage from "./pages/RootEventPage";
-import {fetchEvents} from "./events-fetch";
 
 const router = createBrowserRouter([
   {
@@ -46,14 +45,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
-            loader: async () => {
-              try {
-                return await fetchEvents();
-              } catch (e) {
-                // todo handle error later
-                return [];
-              }
-            },
+            loader: eventPageLoader,
           },
           {
             path: ":id",
