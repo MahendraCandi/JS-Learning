@@ -25,7 +25,7 @@ import RoutePage from "./pages/RoutePage";
 import HomePage from "./pages/HomePage";
 import EventsPage, {loader as eventPageLoader} from "./pages/EventsPage";
 import EventDetailPage, {loader as eventDetailLoader} from "./pages/EventDetailPage";
-import NewEventPage from "./pages/NewEventPage";
+import NewEventPage, {action as newEventAction} from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import RootEventPage from "./pages/RootEventPage";
 import ErrorPages from "./pages/ErrorPages";
@@ -70,7 +70,8 @@ const router = createBrowserRouter([
 
           {
             path: "new",
-            element: <NewEventPage />
+            element: <NewEventPage />,
+            action: newEventAction,
           },
 
         ]

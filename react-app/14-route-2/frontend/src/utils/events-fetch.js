@@ -53,6 +53,46 @@ export async function fetchEvent(eventId) {
   return json.event;
 }
 
+/**
+ * Creates a new event in the backend.
+ * Should throw an error if the event is invalid.
+ *
+ * The API will return a 201 status code if successful
+ * or a 422 status code with an error response if the event is invalid.
+ * Error response:
+ * <pre>
+ *   {
+ *     "message": "Adding the event failed due to validation errors.",
+ *     "errors": {
+ *         "image": "Invalid image."
+ *     }
+ *   }
+ * </pre>
+ *
+ * @param event The event to create:
+ *              <pre>
+ *                {
+ *                  "title": "",
+ *                  "date": "", // format YYYY-MM-DD
+ *                  "image": "", // the link to the image
+ *                  "description": ""
+ *                }
+ *              </pre>
+ */
+export async function createEvent(event) {
+  const response = await fetch("http://localhost:8080/events", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(event),
+  });
+
+  if (!response.ok) {
+    throw new FetchException("Failed to create event", response.status);
+  }
+}
+
 export class FetchException extends Error {
   errorMessage;
   status;

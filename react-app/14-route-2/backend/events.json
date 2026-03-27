@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "title": "oke",
+      "date": "2026-03-27",
+      "image": "https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2022/06/pSpnkIiaRmsaQDu3ipmiA_thumb_469.webp",
+      "description": "oke",
+      "id": "f1ac6fd9-15b7-47ab-8991-d022d774177f"
+    },
+    {
       "id": "e1",
       "title": "A dummy event",
       "date": "2023-02-22",
