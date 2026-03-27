@@ -29,6 +29,7 @@ import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import RootEventPage from "./pages/RootEventPage";
 import ErrorPages from "./pages/ErrorPages";
+import {routeId} from "./utils/constant";
 
 const router = createBrowserRouter([
   {
@@ -53,17 +54,25 @@ const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <EventDetailPage />,
-            loader: eventDetailLoader
+            id: routeId.EVENT_DETAIL,
+            loader: eventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+              },
+              {
+                path: ":edit",
+                element: <EditEventPage />,
+              }
+            ]
           },
+
           {
             path: "new",
             element: <NewEventPage />
           },
-          {
-            path: ":id/edit",
-            element: <EditEventPage />,
-          }
+
         ]
       },
     ],

@@ -1,10 +1,11 @@
-import {Link, useLoaderData} from "react-router-dom";
+import {Link, useLoaderData, useRouteLoaderData} from "react-router-dom";
 import EventItem from "../components/EventItem";
 import {fetchEvent} from "../utils/events-fetch";
 import LoaderResponse from "../utils/loader-response";
+import {routeId} from "../utils/constant";
 
 const EventDetailPage = () => {
-  const loaderResponse = useLoaderData();
+  const loaderResponse = useRouteLoaderData(routeId.EVENT_DETAIL);
   return (
     <>
       <EventItem event={loaderResponse.data}/>
