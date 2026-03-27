@@ -1,13 +1,13 @@
-import {Link, useParams} from "react-router-dom";
+import {Link, useLoaderData} from "react-router-dom";
+import EventItem from "../components/EventItem";
+import {fetchEvent} from "../utils/events-fetch";
+import LoaderResponse from "../utils/loader-response";
 
 const EventDetailPage = () => {
-  const params = useParams();
+  const loaderResponse = useLoaderData();
   return (
     <>
-      <h1>Event Detail Page</h1>
-      <p>
-        Event id: <strong>{params.id}</strong>
-      </p>
+      <EventItem event={loaderResponse.data}/>
       <p>
         <Link to={".."} relative={"path"}>Back</Link>
       </p>
@@ -16,3 +16,11 @@ const EventDetailPage = () => {
 }
 
 export default EventDetailPage;
+
+// about the parameters:
+// - "request" is a React Router object that holds information about the current request.
+// - "params" is similar to React Router useParams
+export async function loader({ request, params }) {
+  const event = await fetchEvent(params.id);
+  return new LoaderResponse(event);
+}
