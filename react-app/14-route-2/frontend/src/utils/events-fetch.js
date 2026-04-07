@@ -93,6 +93,25 @@ export async function createEvent(event) {
   }
 }
 
+/**
+ * Deletes an event from the backend.
+ * @param eventId
+ * @return {Promise<void>}
+ */
+export async function deleteEvent(eventId) {
+  const response = await fetch(`http://localhost:8080/events/${eventId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({eventId: eventId}),
+  });
+
+  if (!response.ok) {
+    throw new FetchException("Failed to delete event", response.status);
+  }
+}
+
 export class FetchException extends Error {
   errorMessage;
   status;

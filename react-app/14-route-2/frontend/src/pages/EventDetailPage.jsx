@@ -1,4 +1,4 @@
-import {Link, useLoaderData, useRouteLoaderData} from "react-router-dom";
+import {Link, useRouteLoaderData} from "react-router-dom";
 import EventItem from "../components/EventItem";
 import {fetchEvent} from "../utils/events-fetch";
 import LoaderResponse from "../utils/loader-response";
