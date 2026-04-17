@@ -69,9 +69,11 @@ export async function fetchEvent(eventId) {
  *   }
  * </pre>
  *
+ * @param method The HTTP method to use: 'POST' or 'PATCH'
  * @param event The event to create:
  *              <pre>
  *                {
+ *                  "id": "", // mandatory for PATCH
  *                  "title": "",
  *                  "date": "", // format YYYY-MM-DD
  *                  "image": "", // the link to the image
@@ -79,9 +81,19 @@ export async function fetchEvent(eventId) {
  *                }
  *              </pre>
  */
-export async function createEvent(event) {
-  const response = await fetch("http://localhost:8080/events", {
-    method: "POST",
+export async function upsertEvent(method, event) {
+  let url = "http://localhost:8080/events";
+
+  if (method === 'PATCH') {
+    if (event.id === undefined) {
+      throw new Error("Event ID is undefined");
+    }
+
+    url += `/${event.id}`;
+  }
+
+  const response = await fetch(url, {
+    method: method,
     headers: {
       "Content-Type": "application/json",
     },

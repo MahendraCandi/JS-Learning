@@ -1,6 +1,7 @@
-import {Form, useNavigate, useNavigation} from 'react-router-dom';
+import {Form, redirect, useNavigate, useNavigation} from 'react-router-dom';
 
 import classes from './EventForm.module.css';
+import {ErrorResponse, upsertEvent} from "../utils/events-fetch";
 
 function EventForm({ method, event, error }) {
   const navigate = useNavigate();
@@ -46,6 +47,25 @@ function EventForm({ method, event, error }) {
       </div>
     </Form>
   );
+}
+
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  const response = await upsertEvent(request.method, {
+    id: params.id, // Can be undefined if creating a new event
+    title: formData.get("title"),
+    date: formData.get("date"),
+    image: formData.get("image"),
+    description: formData.get("description"),
+  });
+
+  // error path
+  if (response instanceof ErrorResponse) {
+    return response;
+  }
+
+  // Success path
+  return redirect("/events");
 }
 
 export default EventForm;
