@@ -88,6 +88,11 @@ export async function createEvent(event) {
     body: JSON.stringify(event),
   });
 
+  if (response.status === 422) {
+    const responseBody = await response.json();
+    return new ErrorResponse(422, responseBody.message, responseBody.errors);
+  }
+
   if (!response.ok) {
     throw new FetchException("Failed to create event", response.status);
   }
@@ -120,5 +125,17 @@ export class FetchException extends Error {
     super(errorMessage);
     this.errorMessage = errorMessage;
     this.status = status;
+  }
+}
+
+export class ErrorResponse {
+  httpStatus;
+  message;
+  detail;
+
+  constructor(httpStatus, message, detail) {
+    this.httpStatus = httpStatus;
+    this.message = message;
+    this.detail = detail;
   }
 }
