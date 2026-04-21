@@ -6,13 +6,13 @@ import {Suspense} from "react";
 
 const EventsPage = () => {
   // useLoaderData gets data from router 'loader'.
-  const response = useLoaderData();
+  const {events} = useLoaderData();
   return (
     <Suspense fallback={<p style={{textAlign:'center'}}>Loading...</p>}>
-      <Await resolve={response.result}>
+      <Await resolve={events}>
         {
-          (loadedResponse) => {
-            return <EventsList events={loadedResponse.data}/>
+          (events) => {
+            return <EventsList events={events.data}/>
           }
         }
       </Await>
@@ -32,7 +32,7 @@ export const loader = () => {
   // 2. wrap the promise in an object
   // we can show loading fallback by using Suspense and Await components.
   return {
-    result: fetchEvents().then((events) => {
+    events: fetchEvents().then((events) => {
       // any error during http fetching will throw FetchException class.
       return new LoaderResponse(events)
     }),
