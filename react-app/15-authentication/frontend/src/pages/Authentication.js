@@ -33,7 +33,7 @@ export async function action ({request}) {
     body: JSON.stringify(authBody),
   });
 
-  if (response.status === 422) {
+  if (response.status === 422 || response.status === 401) {
     return response;
   }
 
