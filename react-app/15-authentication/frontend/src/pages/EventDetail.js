@@ -1,9 +1,7 @@
 import { Suspense } from 'react';
 import {
   useRouteLoaderData,
-  json,
   redirect,
-  defer,
   Await,
 } from 'react-router-dom';
 
@@ -35,7 +33,7 @@ async function loadEvent(id) {
   const response = await fetch('http://localhost:8080/events/' + id);
 
   if (!response.ok) {
-    throw json(
+    Response.json(
       { message: 'Could not fetch details for selected event.' },
       {
         status: 500,
@@ -55,7 +53,7 @@ async function loadEvents() {
     // throw new Response(JSON.stringify({ message: 'Could not fetch events.' }), {
     //   status: 500,
     // });
-    throw json(
+    Response.json(
       { message: 'Could not fetch events.' },
       {
         status: 500,
@@ -70,10 +68,10 @@ async function loadEvents() {
 export async function loader({ request, params }) {
   const id = params.eventId;
 
-  return defer({
+  return {
     event: await loadEvent(id),
     events: loadEvents(),
-  });
+  };
 }
 
 export async function action({ params, request }) {
@@ -83,7 +81,7 @@ export async function action({ params, request }) {
   });
 
   if (!response.ok) {
-    throw json(
+    Response.json(
       { message: 'Could not delete event.' },
       {
         status: 500,

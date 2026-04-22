@@ -25,7 +25,7 @@ async function loadEvents() {
     // throw new Response(JSON.stringify({ message: 'Could not fetch events.' }), {
     //   status: 500,
     // });
-    throw json(
+    Response.json(
       { message: 'Could not fetch events.' },
       {
         status: 500,
@@ -38,7 +38,7 @@ async function loadEvents() {
 }
 
 export function loader() {
-  return defer({
+  return {
     events: loadEvents(),
-  });
+  };
 }
