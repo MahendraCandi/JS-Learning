@@ -16,6 +16,7 @@ import NewsletterPage, { action as newsletterAction } from './pages/Newsletter';
 import AuthenticationPage, {action as authenticationAction} from "./pages/Authentication";
 import {action as logoutAction} from "./pages/Logout";
 import {tokenLoader} from "./auth";
+import {PrivateRoute} from "./components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -42,19 +43,19 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <EventDetailPage />,
+                element: <PrivateRoute><EventDetailPage /></PrivateRoute>,
                 action: deleteEventAction,
               },
               {
                 path: 'edit',
-                element: <EditEventPage />,
+                element: <PrivateRoute><EditEventPage /></PrivateRoute>,
                 action: manipulateEventAction,
               },
             ],
           },
           {
             path: 'new',
-            element: <NewEventPage />,
+            element: <PrivateRoute><NewEventPage /></PrivateRoute>,
             action: manipulateEventAction,
           },
         ],
