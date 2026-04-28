@@ -1,18 +1,1 @@
-{
-  "events": [
-    {
-      "title": "A new event",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGy-QeZXoCTf_ruXiE4MXAHOdZw4Qrcf84Ig&s",
-      "date": "2022-10-01",
-      "description": "Some awesome event!",
-      "id": "2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"
-    }
-  ],
-  "users": [
-    {
-      "email": "bee@g.com",
-      "password": "$2a$12$U41nmuHWmvGaG/kBRASXzO8Gzchi7NFXjhzGvek4dhNLiO2xrhvaW",
-      "id": "4d36b5dd-0d4f-4809-b789-4150d93d9234"
-    }
-  ]
-}
+{"events":[{"title":"Event 100","image":"https://i0.wp.com/blokmsquare.co.id/wp-content/uploads/2025/12/Festival-kuliner-balik-lagi-ke-Blok-M-SquareFrom-Asia-To-Bali-akan-menemani-hari-libur-kamu%F0%9F%98%8D.jpg?fit=1080%2C1350&ssl=1","date":"2026-05-02","description":"Event keren","id":"f1e2945b-86c9-426c-a4aa-86462e42f6cf"}],"users":[{"email":"bee@g.com","password":"$2a$12$U41nmuHWmvGaG/kBRASXzO8Gzchi7NFXjhzGvek4dhNLiO2xrhvaW","id":"4d36b5dd-0d4f-4809-b789-4150d93d9234"},{"email":"admin@admin.com","password":"$2a$12$OF0XJTpeB0T2HgHYUHNwEuXeXnmoxZPHXPBlCXh5O/1E2ALbqu5zK","id":"a693c92a-d737-4e64-8708-e139eeb437f1"},{"email":"ok@m.com","password":"$2a$12$8o1OICzifbxBC8ySXXAGjORL5Q8pUfusqvsLYzLy70G6NAVzuphVu","id":"7fa2ba66-6349-4dea-b892-df1b21808e9d"},{"email":"1@1.com","password":"$2a$12$BdcpEija5LuqmuiKjc4Deu5dZCy6UGMA2Ns3XOEZYgzWS6UTa2nk.","id":"35e95651-5224-4ab4-857d-7d30e7552bdb"}]}
